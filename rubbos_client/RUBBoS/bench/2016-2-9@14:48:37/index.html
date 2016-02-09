@@ -1,0 +1,355 @@
+<h2>RUBBoS client emulator - (C) Rice University/INRIA 2001</h2><p>
+
+<h3>Test date: 2016-2-9 14:48:37</h3><br>
+
+<A HREF="#config">Test configuration</A><br>
+<A HREF="trace_client0.html">Test trace</A><br>
+<A HREF="perf.html">Test performance report</A><br><p>
+<p><hr><p>
+<CENTER><A NAME="config"></A><h2>*** Test configuration ***</h2></CENTER>
+Looking for rubbos.properties in classpath (Client:Client/rubbos_client.jar:.)<p>
+
+<h3>### HTTP server information ###</h3>
+Server name       : node4<br>
+Server port       : 8084<br>
+CJDBC server name : <br>
+EJB HTML files path   : <br>
+EJB Script files path : <br>
+Servlets HTML files path   : /rubbos<br>
+Servlets Script files path : /rubbos/servlet<br>
+Servlets HTML files path   : /PHP<br>
+PHP Script files path : /PHP<br>
+
+<h3><br>### Workload ###</h3>
+Remote client nodes            : 0<br>
+Remote client command          : /usr/bin/java -classpath RUBBoS edu.rice.rubbos.client.ClientEmulator<br>
+Number of clients              : 200<br>
+User transition table          : ./workload/user_transitions.txt<br>
+Author transition table        : ./workload/author_transitions.txt<br>
+Number of columns              : 24<br>
+Number of rows                 : 26<br>
+Maximum number of transitions  : 1000<br>
+Number of stories per page     : 20<br>
+Think time                     : TPCW compatible with 7s mean<br>
+Up ramp time in ms             : 5<br>
+Up ramp slowdown factor        : 2.0<br>
+Session run time in ms         : 10000<br>
+Down ramp time in ms           : 100<br>
+Down ramp slowdown factor      : 3.0<br>
+Percentage of authors          : 10<br>
+
+<h3><br>### Database Information ###</h3>
+Database server                : node4<br>
+
+<h3><br>### Users policy ###</h3>
+Number of authors              : 50<br>
+Number of users                : 500000<br>
+
+<h3><br>### Stories policy ###</h3>
+Stories dictionary             : ./database/dictionary<br>
+Stories maximum lenth          : 1024<br>
+Oldest story year              : 1998<br>
+Oldest story month             : 1<br>
+
+<h3><br>### Comments policy ###</h3>
+Comment maximum length         : 1024<br>
+
+<h3><br>### Database Information ###</h3>
+Monitoring debugging level     : 2<br>
+Monitoring program             : /usr/bin/sar<br>
+Monitoring options             : -n DEV -n SOCK -rubcw<br>
+Monitoring sampling in seconds : 1<br>
+Monitoring rsh                 : /usr/bin/rsh<br>
+Monitoring scp                 : /usr/bin/scp<br>
+Monitoring Gnuplot Terminal    : gif<br>
+
+
+Using Servlets version.<br>
+
+<h3><br>### User Transition table ###</h3>
+
+Transition set: 'User default transition set'<br>
+
+<TABLE border="1" summary="transition table"><TBODY>
+
+<THEAD><TR><TH>State name
+<TH>StoriesOfTheDay<TH>Register<TH>RegisterUser<TH>Browse<TH>BrowseCategories<TH>BrowseStoriesInCategory<TH>OlderStories<TH>ViewStory<TH>PostComment<TH>StoreComment<TH>ViewComment<TH>ModerateComment<TH>StoreModerateLog<TH>SubmitStory<TH>StoreStory<TH>Search<TH>SearchInStories<TH>SearchInComments<TH>SearchInUsers<TH>Author (login)<TH>Author (task)<TH>ReviewStories<TH>AcceptStory<TH>RejectStory<TH>Transition time
+<TR><TD><div align=left><B>StoriesOfTheDay</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.2</div><TD><div align=right>0.19</div><TD><div align=right>0.0</div><TD><div align=right>0.1</div><TD><div align=right>0.1</div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.2</div><TD><div align=right>0.1</div><TD><div align=right>0.01</div><TD><div align=right>0.2</div><TD><div align=right>0.01</div><TD><div align=right>0.2</div><TD><div align=right>0.1</div><TD><div align=right>0.1</div><TD><div align=right>0.1</div><TD><div align=right>0.1</div><TD><div align=right>0.01</div><TD><div align=right>0.01</div><TD><div align=right>0.1</div><TD><div align=right>0.2</div><TD><div align=right>0.2</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>Register</B></div><TD><div align=right>0.03</div><TD><div align=right>0.0</div><TD><div align=right>0.07</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.07</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.07</div><TD><div align=right>0.001</div><TD><div align=right>0.07</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.04</div><TD><div align=right>0.04</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>RegisterUser</B></div><TD><div align=right>0.0</div><TD><div align=right>0.99</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>Browse</B></div><TD><div align=right>0.12</div><TD><div align=right>0.004</div><TD><div align=right>0.28</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.28</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.28</div><TD><div align=right>0.004</div><TD><div align=right>0.28</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.16</div><TD><div align=right>0.16</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>BrowseCategories</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.4</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>BrowseStoriesInCategory</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.99</div><TD><div align=right>0.3</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>OlderStories</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.4</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.35</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>ViewStory</B></div><TD><div align=right>0.6</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.44</div><TD><div align=right>0.49</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.49</div><TD><div align=right>0.0</div><TD><div align=right>0.49</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>PostComment</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.25</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.25</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>StoreComment</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.99</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>ViewComment</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.39</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.34</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.49</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>ModerateComment</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>StoreModerateLog</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.98</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>SubmitStory</B></div><TD><div align=right>0.06</div><TD><div align=right>0.002</div><TD><div align=right>0.14</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.14</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.14</div><TD><div align=right>0.14</div><TD><div align=right>0.14</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.08</div><TD><div align=right>0.08</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>StoreStory</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.98</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>Search</B></div><TD><div align=right>0.09</div><TD><div align=right>0.003</div><TD><div align=right>0.21</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.21</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.21</div><TD><div align=right>0.003</div><TD><div align=right>0.21</div><TD><div align=right>0.0</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.12</div><TD><div align=right>0.12</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>SearchInStories</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.5</div><TD><div align=right>0.3</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>SearchInComments</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.3</div><TD><div align=right>0.0</div><TD><div align=right>0.3</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>SearchInUsers</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.09</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.3</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>Author (login)</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>Author (task)</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.98</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>ReviewStories</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.98</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>AcceptStory</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.5</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>RejectStory</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.29</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>Back probability</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.15</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.2</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.35</div><TD><div align=right>0.35</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>End of Session</B></div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.05</div><TD><div align=right>0.05</div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.1</div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.1</div><TD><div align=right>0.1</div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.1</div><TD><div align=right>0.05</div><TD><div align=right>0.05</div><TD><div align=right>1.0</div>
+</TBODY></TABLE>
+
+
+
+<h3><br>### Author Transition table ###</h3>
+
+Transition set: 'Author default transition set'<br>
+
+<TABLE border="1" summary="transition table"><TBODY>
+
+<THEAD><TR><TH>State name
+<TH>StoriesOfTheDay<TH>Register<TH>RegisterUser<TH>Browse<TH>BrowseCategories<TH>BrowseStoriesInCategory<TH>OlderStories<TH>ViewStory<TH>PostComment<TH>StoreComment<TH>ViewComment<TH>ModerateComment<TH>StoreModerateLog<TH>SubmitStory<TH>StoreStory<TH>Search<TH>SearchInStories<TH>SearchInComments<TH>SearchInUsers<TH>Author (login)<TH>Author (task)<TH>ReviewStories<TH>AcceptStory<TH>RejectStory<TH>Transition time
+<TR><TD><div align=left><B>StoriesOfTheDay</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.2</div><TD><div align=right>0.19</div><TD><div align=right>0.0</div><TD><div align=right>0.1</div><TD><div align=right>0.1</div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.2</div><TD><div align=right>0.1</div><TD><div align=right>0.01</div><TD><div align=right>0.2</div><TD><div align=right>0.01</div><TD><div align=right>0.2</div><TD><div align=right>0.1</div><TD><div align=right>0.1</div><TD><div align=right>0.1</div><TD><div align=right>0.1</div><TD><div align=right>0.01</div><TD><div align=right>0.01</div><TD><div align=right>0.1</div><TD><div align=right>0.2</div><TD><div align=right>0.2</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>Register</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>RegisterUser</B></div><TD><div align=right>0.0</div><TD><div align=right>0.99</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>Browse</B></div><TD><div align=right>0.09</div><TD><div align=right>0.003</div><TD><div align=right>0.21</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.21</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.21</div><TD><div align=right>0.003</div><TD><div align=right>0.21</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.003</div><TD><div align=right>0.12</div><TD><div align=right>0.12</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>BrowseCategories</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.4</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>BrowseStoriesInCategory</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.99</div><TD><div align=right>0.3</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>OlderStories</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.4</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.35</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>ViewStory</B></div><TD><div align=right>0.6</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.44</div><TD><div align=right>0.49</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.49</div><TD><div align=right>0.0</div><TD><div align=right>0.49</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>PostComment</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>StoreComment</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.99</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>ViewComment</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.29</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.24</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.49</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>ModerateComment</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.25</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.25</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>StoreModerateLog</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.98</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>SubmitStory</B></div><TD><div align=right>0.03</div><TD><div align=right>0.001</div><TD><div align=right>0.07</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.07</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.07</div><TD><div align=right>0.07</div><TD><div align=right>0.07</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.001</div><TD><div align=right>0.04</div><TD><div align=right>0.04</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>StoreStory</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.98</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>Search</B></div><TD><div align=right>0.06</div><TD><div align=right>0.002</div><TD><div align=right>0.14</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.14</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.14</div><TD><div align=right>0.002</div><TD><div align=right>0.14</div><TD><div align=right>0.0</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.002</div><TD><div align=right>0.08</div><TD><div align=right>0.08</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>SearchInStories</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.5</div><TD><div align=right>0.3</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>SearchInComments</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.3</div><TD><div align=right>0.0</div><TD><div align=right>0.3</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>SearchInUsers</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.09</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.3</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>Author (login)</B></div><TD><div align=right>0.12</div><TD><div align=right>0.004</div><TD><div align=right>0.28</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.28</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.28</div><TD><div align=right>0.004</div><TD><div align=right>0.28</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.004</div><TD><div align=right>0.16</div><TD><div align=right>0.16</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>Author (task)</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.98</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>ReviewStories</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.98</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>AcceptStory</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.5</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>RejectStory</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.29</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>Back probability</B></div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.15</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.2</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.35</div><TD><div align=right>0.35</div><TD><div align=right>1.0</div>
+<TR><TD><div align=left><B>End of Session</B></div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.05</div><TD><div align=right>0.05</div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.1</div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.1</div><TD><div align=right>0.1</div><TD><div align=right>0.1</div><TD><div align=right>0.0</div><TD><div align=right>0.0</div><TD><div align=right>0.1</div><TD><div align=right>0.05</div><TD><div align=right>0.05</div><TD><div align=right>1.0</div>
+</TBODY></TABLE>
+
+
+<p><hr><p>
+Total number of clients for this experiment: 200<br>
+<CENTER></A><A NAME="trace"><h2>*** Monitoring ***</h2></CENTER>
+&nbsp &nbsp Command is: /usr/bin/rsh -x node4 rm -f /tmp/web_server<br>
+
+An error occured while executing monitoring program (Cannot run program "/usr/bin/rsh": error=2, No such file or directory)
+<CENTER></A><A NAME="trace"><h2>*** Test trace ***</h2></CENTER><p>
+<A HREF="trace_client0.html">Main client traces</A><br>
+<br><p>
+&nbsp&nbsp&nbsp<A HREF="#up">Up ramp trace</A><br>
+&nbsp&nbsp&nbsp<A HREF="#run">Runtime session trace</A><br>
+&nbsp&nbsp&nbsp<A HREF="#down">Down ramp trace</A><br><p><p>
+ClientEmulator: Starting 200 session threads<br>
+<br><A NAME="up"></A>
+<h3>ClientEmulator: Switching to ** UP RAMP **</h3><br><p>
+<br><A NAME="run"></A>
+<h3>ClientEmulator: Switching to ** RUNTIME SESSION **</h3><br><p>
+Thread UserSession195: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession2: Error returned from access to http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.SubmitStory<br>
+Thread UserSession2: HTML reply was: Unable to read file (exception: java.io.FileNotFoundException: /webapps/Servlet_HTML/header.html (No such file or directory))<br>
+<title>RUBBoS: Story submission</title>
+<center><h2>Submit your incredible story !</h2><br>
+
+<form action="/rubbos/servlet/edu.rice.rubbos.servlets.StoreStory" method=POST>
+<center><table>
+<tr><td><b>Nickname</b><td><input type=text size=20 name=nickname>
+<tr><td><b>Password</b><td><input type=text size=20 name=password>
+<tr><td><b>Story title</b><td><input type=text size=100 name=title>
+<tr><td><b>Category</b><td><SELECT name=category>
+
+<h3>ERROR: Sorry, but this story does not exist.</h3><br>
+<br>
+Thread UserSession122: Error returned from access to http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.SubmitStory<br>
+Thread UserSession122: HTML reply was: Unable to read file (exception: java.io.FileNotFoundException: /webapps/Servlet_HTML/header.html (No such file or directory))<br>
+<title>RUBBoS: Story submission</title>
+<center><h2>Submit your incredible story !</h2><br>
+
+<form action="/rubbos/servlet/edu.rice.rubbos.servlets.StoreStory" method=POST>
+<center><table>
+<tr><td><b>Nickname</b><td><input type=text size=20 name=nickname>
+<tr><td><b>Password</b><td><input type=text size=20 name=password>
+<tr><td><b>Story title</b><td><input type=text size=100 name=title>
+<tr><td><b>Category</b><td><SELECT name=category>
+
+<h3>ERROR: Sorry, but this story does not exist.</h3><br>
+<br>
+Thread UserSession195: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession59: Error returned from access to http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.SubmitStory<br>
+Thread UserSession59: HTML reply was: Unable to read file (exception: java.io.FileNotFoundException: /webapps/Servlet_HTML/header.html (No such file or directory))<br>
+<title>RUBBoS: Story submission</title>
+<center><h2>Submit your incredible story !</h2><br>
+
+<form action="/rubbos/servlet/edu.rice.rubbos.servlets.StoreStory" method=POST>
+<center><table>
+<tr><td><b>Nickname</b><td><input type=text size=20 name=nickname>
+<tr><td><b>Password</b><td><input type=text size=20 name=password>
+<tr><td><b>Story title</b><td><input type=text size=100 name=title>
+<tr><td><b>Category</b><td><SELECT name=category>
+
+<h3>ERROR: Sorry, but this story does not exist.</h3><br>
+<br>
+Thread UserSession162: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession175: Error returned from access to http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.SubmitStory<br>
+Thread UserSession175: HTML reply was: Unable to read file (exception: java.io.FileNotFoundException: /webapps/Servlet_HTML/header.html (No such file or directory))<br>
+<title>RUBBoS: Story submission</title>
+<center><h2>Submit your incredible story !</h2><br>
+
+<form action="/rubbos/servlet/edu.rice.rubbos.servlets.StoreStory" method=POST>
+<center><table>
+<tr><td><b>Nickname</b><td><input type=text size=20 name=nickname>
+<tr><td><b>Password</b><td><input type=text size=20 name=password>
+<tr><td><b>Story title</b><td><input type=text size=100 name=title>
+<tr><td><b>Category</b><td><SELECT name=category>
+
+<h3>ERROR: Sorry, but this story does not exist.</h3><br>
+<br>
+Thread UserSession142: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession195: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession162: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession142: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession195: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread AuthorSession112: Error returned from access to http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.SubmitStory<br>
+Thread AuthorSession112: HTML reply was: Unable to read file (exception: java.io.FileNotFoundException: /webapps/Servlet_HTML/header.html (No such file or directory))<br>
+<title>RUBBoS: Story submission</title>
+<center><h2>Submit your incredible story !</h2><br>
+
+<form action="/rubbos/servlet/edu.rice.rubbos.servlets.StoreStory" method=POST>
+<center><table>
+<tr><td><b>Nickname</b><td><input type=text size=20 name=nickname>
+<tr><td><b>Password</b><td><input type=text size=20 name=password>
+<tr><td><b>Story title</b><td><input type=text size=100 name=title>
+<tr><td><b>Category</b><td><SELECT name=category>
+
+<h3>ERROR: Sorry, but this story does not exist.</h3><br>
+<br>
+Thread UserSession86: Error returned from access to http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.SubmitStory<br>
+Thread UserSession86: HTML reply was: Unable to read file (exception: java.io.FileNotFoundException: /webapps/Servlet_HTML/header.html (No such file or directory))<br>
+<title>RUBBoS: Story submission</title>
+<center><h2>Submit your incredible story !</h2><br>
+
+<form action="/rubbos/servlet/edu.rice.rubbos.servlets.StoreStory" method=POST>
+<center><table>
+<tr><td><b>Nickname</b><td><input type=text size=20 name=nickname>
+<tr><td><b>Password</b><td><input type=text size=20 name=password>
+<tr><td><b>Story title</b><td><input type=text size=100 name=title>
+<tr><td><b>Category</b><td><SELECT name=category>
+
+<h3>ERROR: Sorry, but this story does not exist.</h3><br>
+<br>
+Thread UserSession187: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession162: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession121: Error returned from access to http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.SubmitStory<br>
+Thread UserSession121: HTML reply was: Unable to read file (exception: java.io.FileNotFoundException: /webapps/Servlet_HTML/header.html (No such file or directory))<br>
+<title>RUBBoS: Story submission</title>
+<center><h2>Submit your incredible story !</h2><br>
+
+<form action="/rubbos/servlet/edu.rice.rubbos.servlets.StoreStory" method=POST>
+<center><table>
+<tr><td><b>Nickname</b><td><input type=text size=20 name=nickname>
+<tr><td><b>Password</b><td><input type=text size=20 name=password>
+<tr><td><b>Story title</b><td><input type=text size=100 name=title>
+<tr><td><b>Category</b><td><SELECT name=category>
+
+<h3>ERROR: Sorry, but this story does not exist.</h3><br>
+<br>
+Thread AuthorSession89: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession142: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession195: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession124: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession187: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession162: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread AuthorSession89: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession142: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession195: Error returned from access to http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories<br>
+Thread UserSession195: HTML reply was: null<br>
+Thread UserSession107: Error returned from access to http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.SubmitStory<br>
+Thread UserSession107: HTML reply was: Unable to read file (exception: java.io.FileNotFoundException: /webapps/Servlet_HTML/header.html (No such file or directory))<br>
+<title>RUBBoS: Story submission</title>
+<center><h2>Submit your incredible story !</h2><br>
+
+<form action="/rubbos/servlet/edu.rice.rubbos.servlets.StoreStory" method=POST>
+<center><table>
+<tr><td><b>Nickname</b><td><input type=text size=20 name=nickname>
+<tr><td><b>Password</b><td><input type=text size=20 name=password>
+<tr><td><b>Story title</b><td><input type=text size=100 name=title>
+<tr><td><b>Category</b><td><SELECT name=category>
+
+<h3>ERROR: Sorry, but this story does not exist.</h3><br>
+<br>
+Thread UserSession124: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession187: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession162: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread AuthorSession89: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession142: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession124: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession187: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession162: Error returned from access to http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories<br>
+Thread UserSession162: HTML reply was: null<br>
+Thread AuthorSession89: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession142: Error returned from access to http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories<br>
+Thread UserSession142: HTML reply was: null<br>
+Thread UserSession124: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession187: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread AuthorSession89: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession172: Error returned from access to http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.SubmitStory<br>
+Thread UserSession172: HTML reply was: Unable to read file (exception: java.io.FileNotFoundException: /webapps/Servlet_HTML/header.html (No such file or directory))<br>
+<title>RUBBoS: Story submission</title>
+<center><h2>Submit your incredible story !</h2><br>
+
+<form action="/rubbos/servlet/edu.rice.rubbos.servlets.StoreStory" method=POST>
+<center><table>
+<tr><td><b>Nickname</b><td><input type=text size=20 name=nickname>
+<tr><td><b>Password</b><td><input type=text size=20 name=password>
+<tr><td><b>Story title</b><td><input type=text size=100 name=title>
+<tr><td><b>Category</b><td><SELECT name=category>
+
+<h3>ERROR: Sorry, but this story does not exist.</h3><br>
+<br>
+Thread UserSession124: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession154: Error returned from access to http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.SubmitStory<br>
+Thread UserSession154: HTML reply was: Unable to read file (exception: java.io.FileNotFoundException: /webapps/Servlet_HTML/header.html (No such file or directory))<br>
+<title>RUBBoS: Story submission</title>
+<center><h2>Submit your incredible story !</h2><br>
+
+<form action="/rubbos/servlet/edu.rice.rubbos.servlets.StoreStory" method=POST>
+<center><table>
+<tr><td><b>Nickname</b><td><input type=text size=20 name=nickname>
+<tr><td><b>Password</b><td><input type=text size=20 name=password>
+<tr><td><b>Story title</b><td><input type=text size=100 name=title>
+<tr><td><b>Category</b><td><SELECT name=category>
+
+<h3>ERROR: Sorry, but this story does not exist.</h3><br>
+<br>
+Thread UserSession187: Error returned from access to http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories<br>
+Thread UserSession187: HTML reply was: null<br>
+Thread UserSession110: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread AuthorSession89: Error returned from access to http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories<br>
+Thread AuthorSession89: HTML reply was: null<br>
+<br><A NAME="down"></A>
+<h3>ClientEmulator: Switching to ** DOWN RAMP **</h3><br><p>
+Thread UserSession124: Error returned from access to http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories<br>
+Thread UserSession124: HTML reply was: null<br>
+ClientEmulator: Shutting down threads ...<br>
+Thread UserSession110: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession110: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession110: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession110: Unable to open URL http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories (http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories)<br>
+Thread UserSession110: Error returned from access to http://node4:8084/rubbos/servlet/edu.rice.rubbos.servlets.BrowseCategories<br>
+Thread UserSession110: HTML reply was: null<br>
+Done
+
+<p><hr><p>

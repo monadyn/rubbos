@@ -37,6 +37,6 @@ foreach i (rubbos.properties_100)
   #rsh sci6 RUBBoS/flush_cache 490000	# remote client
   #rsh sci7 RUBBoS/flush_cache 490000	# remote client
   #rsh sci8 RUBBoS/flush_cache 490000	# remote client
-  make emulator
+  #make emulator
 end
 echo 'RW done'
