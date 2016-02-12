@@ -6,7 +6,7 @@ sed "s/RUBBOS_DB_URL/${ip}:${port}/g" mysql.properties.template > mysql.properti
 echo $ip
 echo $port
 
-docker rmi hudsonshan/rubbos_tomcat:app_dyn
-docker build -t hudsonshan/rubbos_tomcat:app_dyn .
+docker rmi hudsonshan/rubbos_tomcat:app_$port
+docker build -t hudsonshan/rubbos_tomcat:app_$port .
 
-docker push hudsonshan/rubbos_tomcat:app_dyn
+docker push hudsonshan/rubbos_tomcat:app_$port

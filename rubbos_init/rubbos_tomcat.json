@@ -1,0 +1,24 @@
+{
+  "id":"tomcat84",
+  "container":{
+    "docker":{
+      "image":"hudsonshan/rubbos_tomcat:base_jdbc2",
+      "network": "BRIDGE",
+      "privileged": true,
+      "parameters": [
+                { "key": "volumes-from", "value": "16d1dae98620" }
+      ],
+      "type":"DOCKER",
+      "portMappings":[
+        { "containerPort": 8080, "hostPort": 0, "servicePort": 8084, "protocol": "tcp" }
+      ]
+    }
+  },
+  "cpus": 0.2,
+  "mem": 400.0,
+  "ports": [
+        8080,
+        8084
+  ],
+  "instances": 1
+}
