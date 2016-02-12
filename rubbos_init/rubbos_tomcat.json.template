@@ -6,7 +6,7 @@
       "network": "BRIDGE",
       "privileged": true,
       "parameters": [
-                { "key": "volumes-from", "value": "58a3a90f045e" }
+                { "key": "volumes-from", "value": "RUBBOS_APP_CONTAINER_ID" }
       ],
       "type":"DOCKER",
       "portMappings":[

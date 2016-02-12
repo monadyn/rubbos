@@ -2,7 +2,7 @@
     "id": "rubbosapp",
     "container": {
         "docker": {
-            "image": "hudsonshan/rubbos_tomcat:app_31662"
+            "image": "hudsonshan/rubbos_tomcat:app_31565"
         },
         "type": "DOCKER"
     },
