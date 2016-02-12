@@ -1,0 +1,20 @@
+{
+    "id": "rubbosapp",
+    "container": {
+        "docker": {
+            "image": "hudsonshan/rubbos_tomcat:app"
+        },
+        "type": "DOCKER",
+        "volumes": [
+      {
+        "containerPath": "/data",
+        "hostPath": "/var/data/a",
+        "mode": "RW"
+      }
+    ]
+    },
+    "args": ["data-only"],
+    "cpus": 0.2,
+    "mem": 32.0,
+    "instances": 1
+}
