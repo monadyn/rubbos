@@ -1,0 +1,69 @@
+<?xml version="1.0" ?>
+
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+
+<xsl:output method="xml" indent="yes"/>
+
+<xsl:template match="@*|node()">
+<xsl:copy>
+<xsl:apply-templates select="@*|node()"/>
+</xsl:copy>
+</xsl:template>
+
+<xsl:template match="//argshere[@idtype='db_server' and @actype='mon_ignition' and @type='current']"> &amp;</xsl:template>
+
+<xsl:template match="//argshere[@idtype='db_server' and @actype='mon_ignition' and @type='pre-action']"></xsl:template>
+
+<xsl:template match="//argshere[@idtype='db_server' and @actype='mon_ignition' and @type='post-action']"></xsl:template>
+
+
+<xsl:template match="//pastehere[@id='../templates/DeployScript/POSTGRES_LOCK_MONignition.xsl']">
+#!/bin/bash
+
+cd <xsl:value-of select="//params/env/param[@name='OUTPUT_HOME']/@value"/>
+source set_elba_env.sh
+
+<xsl:choose>
+  <xsl:when test="//instances/params/rubbos-conf[@name='MON_FREQUENCY']/@value">
+FREQUENCY=<xsl:value-of select="//instances/params/rubbos-conf[@name='PG_LOCK_MON_FREQUENCY']/@value"/>
+  </xsl:when>
+  <xsl:otherwise>
+FREQUENCY=0.1
+  </xsl:otherwise>
+</xsl:choose>
+
+# data filename suffix
+data_filename_suffix="`hostname`.data"
+
+# sar filename
+mon_filename=$RUBBOS_TOP/postgres_lock-${data_filename_suffix}
+
+# run test until postgres will be stoped
+cd $POSTGRES_HOME
+postgres_alive=`ps aux|grep postgres|grep -v grep|wc -l`
+while [ $postgres_alive -gt 0 ]; do
+        date "+%Y-%m-%d %H:%M:%S.%N" >> ${mon_filename}
+
+	$POSTGRES_HOME/bin/psql -U <xsl:value-of select="//instances/params/env/param[@name='ELBA_USER']/@value"/> -c "
+            SELECT COUNT(s.backendid) - 1 AS total,
+                   SUM(CASE WHEN pg_stat_get_backend_waiting(s.backendid) = true THEN 1 ELSE 0 END) AS lock_wait
+            FROM (SELECT pg_stat_get_backend_idset() AS backendid) AS s,
+                     pg_catalog.pg_user AS userss
+            WHERE userss.usesysid = pg_stat_get_backend_userid(s.backendid)
+              AND userss.usename='<xsl:value-of select="//instances/params/env/param[@name='ELBA_USER']/@value"/>'
+              AND pg_stat_get_backend_activity(s.backendid) != '&lt;IDLE>';
+        " rubbos | grep '|' | grep -v total >> ${mon_filename}
+
+        sleep $FREQUENCY
+        postgres_alive=`ps aux|grep postgres|grep -v grep|wc -l`
+done
+echo
+
+# chmod
+chmod g+w ${mon_filename}
+chmod o+r ${mon_filename}
+
+</xsl:template>
+
+</xsl:stylesheet>
+
