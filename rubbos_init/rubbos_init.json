@@ -2,12 +2,12 @@
     "id": "rubbosapp",
     "container": {
         "docker": {
-            "image": "hudsonshan/rubbos_tomcat:app_31565"
+            "image": "hudsonshan/rubbos_tomcat:app_31485"
         },
         "type": "DOCKER"
     },
     "cmd": "while sleep 100000; do date -u +%T; done",
-    "cpus": 0.1,
+    "cpus": 0.05,
     "mem": 32.0,
     "instances": 1
 }

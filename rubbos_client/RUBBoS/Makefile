@@ -17,7 +17,7 @@ JAVACC = $(JAVAC) $(JAVACOPTS)
 RMIC = $(JAVA_HOME)/bin/rmic
 RMIREGISTRY= $(JAVA_HOME)/bin/rmiregistry 
 #CLASSPATH = .:$(J2EE_HOME)/lib/j2ee.jar:$(JAVA_HOME)/jre/lib/rt.jar:$TOMCATservlet.jar
-CLASSPATH = .:$(J2EE_HOME)/lib/j2ee.jar:$(JAVA_HOME)/jre/lib/rt.jar
+CLASSPATH = .:$(J2EE_HOME)/lib/j2ee.jar:$(JAVA_HOME)/jre/lib/rt.jar:./Client/javax.json.jar
 JAVADOC = $(JAVA_HOME)/javadoc
 
 

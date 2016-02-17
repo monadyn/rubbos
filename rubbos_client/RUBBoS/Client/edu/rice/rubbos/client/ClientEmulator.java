@@ -118,7 +118,9 @@ public class ClientEmulator
       // Start by creating a report directory and redirecting output to an index.html file
       System.out.println("RUBBoS client emulator - (C) Rice University/INRIA 2001\n");
       reportDir = "bench/"+TimeManagement.currentDateToString()+"/";
-      reportDir = reportDir.replace(' ', '@');
+      //reportDir = reportDir.replace(' ', '@');
+      reportDir = reportDir.replace(' ', '_');
+      reportDir = reportDir.replace(':', '-');
       try
       {
         System.out.println("Creating report directory "+reportDir);
@@ -913,6 +915,21 @@ public class ClientEmulator
         System.out.println("An error occured while generating the graphs ("+e.getMessage()+")");
       }
     }
+
+    // perf json file
+    PrintStream outputStream = new PrintStream(new FileOutputStream(reportDir+"perf.json"));
+    System.setOut(outputStream);
+    System.setErr(outputStream);
+
+
+    //System.out.println("<br><A NAME=\"up_stat\"></A>");
+    //upRampStats.display_stats("Up ramp", TimeManagement.diffTimeInMs(upRampDate, runSessionDate), false);
+    //System.out.println("<br><A NAME=\"run_stat\"></A>");
+    //runSessionStats.display_stats("Runtime session", TimeManagement.diffTimeInMs(runSessionDate, downRampDate), false);
+    //System.out.println("<br><A NAME=\"down_stat\"></A>");
+    //downRampStats.display_stats("Down ramp", TimeManagement.diffTimeInMs(downRampDate, endDownRampDate), false);
+    //System.out.println("<br><A NAME=\"all_stat\"></A>");
+    allStats.write_json_stats("Overall", TimeManagement.diffTimeInMs(upRampDate, endDownRampDate), false);
 
     Runtime.getRuntime().exit(0);
   }

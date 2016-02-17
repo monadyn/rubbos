@@ -1,4 +1,6 @@
 package edu.rice.rubbos.client;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonWriter;
  
 /**
  * This class provides thread-safe statistics. Each statistic entry is composed as follow:
@@ -290,7 +292,73 @@ public class Stats
         if (success > 0)
           System.out.println(totalTime[i]/success+" ms</div>");
         else
-           System.out.println("0 ms</div>");
+          System.out.println("0 ms</div>");
+      }
+    }
+
+    // Display total   
+    if (counts > 0)
+    {
+      System.out.print("<TR><TD><div align=left><B>Total</B></div><TD><div align=right><B>100 %</B></div><TD><div align=right><B>"+counts+
+                       "</B></div><TD><div align=right><B>"+errors+ "</B></div><TD><div align=center>-</div><TD><div align=center>-</div><TD><div align=right><B>");
+      counts += errors;
+      System.out.println(time/counts+" ms</B></div>");
+      // Display stats about sessions
+      System.out.println("<TR><TD><div align=left><B>Average throughput</div></B><TD colspan=6><div align=center><B>"+1000*counts/sessionTime+" req/s</B></div>");
+      System.out.println("<TR><TD><div align=left>Completed sessions</div><TD colspan=6><div align=left>"+nbSessions+"</div>");
+      System.out.println("<TR><TD><div align=left>Total time</div><TD colspan=6><div align=left>"+sessionsTime/1000L+" seconds</div>");
+      System.out.print("<TR><TD><div align=left><B>Average session time</div></B><TD colspan=6><div align=left><B>");
+      if (nbSessions > 0)
+        System.out.print(sessionsTime/(long)nbSessions/1000L+" seconds");
+      else
+        System.out.print("0 second");
+      System.out.println("</B></div>");
+    }
+    System.out.println("</TABLE><p>");
+  }
+
+  public void write_json_stats(String title, long sessionTime, boolean exclude0Stat)
+  {
+    int counts = 0;
+    int errors = 0;
+    long time = 0;
+
+    System.out.println("<br><h3>"+title+" statistics</h3><p>");
+    System.out.println("<TABLE BORDER=1>");
+    System.out.println("<THEAD><TR><TH>State name<TH>% of total<TH>Count<TH>Errors<TH>Minimum Time<TH>Maximum Time<TH>Average Time<TBODY>");
+    // Display stat for each state
+    for (int i = 0 ; i < getNbOfStats() ; i++)
+    {
+      counts += count[i];
+      errors += error[i];
+      time += totalTime[i];
+    }
+
+    for (int i = 0 ; i < getNbOfStats() ; i++)
+    {
+      if ((exclude0Stat && count[i] != 0) || (!exclude0Stat))
+      {
+        System.out.print("<TR><TD><div align=left>"+TransitionTable.getStateName(i)+"</div><TD><div align=right>");
+        if ((counts > 0) && (count[i] > 0))
+          System.out.print(100*count[i]/counts+" %");
+        else
+          System.out.print("0 %");
+        System.out.print("</div><TD><div align=right>"+count[i]+"</div><TD><div align=right>");
+        if (error[i] > 0)
+          System.out.print("<B>"+error[i]+"</B>");
+        else
+          System.out.print(error[i]);
+        System.out.print("</div><TD><div align=right>");
+        if (minTime[i] != Long.MAX_VALUE)
+          System.out.print(minTime[i]);
+        else
+          System.out.print("0");
+        System.out.print(" ms</div><TD><div align=right>"+maxTime[i]+" ms</div><TD><div align=right>");
+        int success = count[i] - error[i];
+        if (success > 0)
+          System.out.println(totalTime[i]/success+" ms</div>");
+        else
+          System.out.println("0 ms</div>");
       }
     }
 

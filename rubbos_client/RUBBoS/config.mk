@@ -9,7 +9,7 @@ JAVACOPTS = -deprecation
 JAVACC = $(JAVAC) $(JAVACOPTS)
 RMIC = $(JAVA_HOME)/bin/rmic
 RMIREGISTRY= $(JAVA_HOME)/bin/rmiregistry
-CLASSPATH = .:$(J2EE_HOME)/lib/j2ee.jar:$(JAVA_HOME)/jre/lib/rt.jar:$(CATALINA_HOME)/common/lib/servlet-api.jar
+CLASSPATH = .:$(J2EE_HOME)/lib/j2ee.jar:$(JAVA_HOME)/jre/lib/rt.jar:$(CATALINA_HOME)/common/lib/servlet-api.jar:./Client/javax.json.jar
 JAVADOC = $(JAVA_HOME)/bin/javadoc
 JAR = $(JAVA_HOME)/bin/jar
 

@@ -33,7 +33,7 @@ database_server = node4
 # Workload: precise which transition table to use
 workload_remote_client_nodes =
 workload_remote_client_command = /usr/bin/java -classpath RUBBoS edu.rice.rubbos.client.ClientEmulator
-workload_number_of_clients_per_node = 8000
+workload_number_of_clients_per_node = 4000
 
 workload_user_transition_table = ./workload/user_transitions.txt
 workload_author_transition_table = ./workload/author_transitions.txt

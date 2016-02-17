@@ -6,7 +6,7 @@
       "network": "BRIDGE",
       "privileged": true,
       "parameters": [
-                { "key": "volumes-from", "value": "58a3a90f045e" }
+                { "key": "volumes-from", "value": "a919cd2aeeae" }
       ],
       "type":"DOCKER",
       "portMappings":[
@@ -14,8 +14,8 @@
       ]
     }
   },
-  "cpus": 0.2,
-  "mem": 400.0,
+  "cpus": 4,
+  "mem": 2069.0,
   "ports": [
         8080,
         8084
