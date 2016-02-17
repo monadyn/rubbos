@@ -1,0 +1,32 @@
+
+set ns [new Simulator]
+source tb_compat.tcl
+
+
+set HPD1 [$ns node]
+tb-set-node-os $HPD1 FC4-RUBBoS
+tb-set-hardware $HPD1 pc3000
+
+set hshan-bench [$ns node]
+tb-set-node-os $hshan-bench FC4-RUBBoS
+tb-set-hardware $hshan-bench pc3000
+
+set hshan-control [$ns node]
+tb-set-node-os $hshan-control FC4-RUBBoS
+tb-set-hardware $hshan-control pc3000
+
+set hshan-tomcat [$ns node]
+tb-set-node-os $hshan-tomcat FC4-RUBBoS
+tb-set-hardware $hshan-tomcat pc3000
+
+set hshan-mysql [$ns node]
+tb-set-node-os $hshan-mysql FC4-RUBBoS
+tb-set-hardware $hshan-mysql pc3000
+
+set lan1 [$ns make-lan "$HPD1 $hshan-bench $hshan-control " 1000Mb 0ms]
+set lan2 [$ns make-lan "$hshan-control $hshan-tomcat " 1000Mb 0ms]
+set lan4 [$ns make-lan "$hshan-tomcat $hshan-mysql " 1000Mb 0ms]
+
+
+$ns rtproto Static
+$ns run
