@@ -18,7 +18,7 @@ echo "  CONFIGURING RUBBOS SERVLET on $HOSTNAME"
 \cp $SOFTWARE_HOME/mysql-connector-java-5.0.4-bin.jar $RUBBOS_HOME/Servlets/
 \cp $OUTPUT_HOME/rubbos_conf/mysql.properties $RUBBOS_HOME/Servlets/
 \cp $OUTPUT_HOME/rubbos_conf/build.xml $RUBBOS_HOME/Servlets/
-\cp $OUTPUT_HOME/rubbos_conf/Config.java /root/elba/rubbos/RUBBoS/Servlets/edu/rice/rubbos/servlets/
+\cp $OUTPUT_HOME/rubbos_conf/Config.java /home/hshan/elba/rubbos/RUBBoS/Servlets/edu/rice/rubbos/servlets/
 \cp $OUTPUT_HOME/rubbos_conf/web.xml $RUBBOS_HOME/Servlet_HTML/WEB-INF/
 
 cp $OUTPUT_HOME/rubbos_conf/TOMCAT_log4j.properties $RUBBOS_HOME/Servlet_HTML/WEB-INF/log4j.properties

@@ -7,13 +7,17 @@ set HPD1 [$ns node]
 tb-set-node-os $HPD1 FC4-RUBBoS
 tb-set-hardware $HPD1 pc3000
 
-set hshan-bench [$ns node]
-tb-set-node-os $hshan-bench FC4-RUBBoS
-tb-set-hardware $hshan-bench pc3000
+set hdp103 [$ns node]
+tb-set-node-os $hdp103 FC4-RUBBoS
+tb-set-hardware $hdp103 pc3000
 
-set hshan-control [$ns node]
-tb-set-node-os $hshan-control FC4-RUBBoS
-tb-set-hardware $hshan-control pc3000
+set hdp104 [$ns node]
+tb-set-node-os $hdp104 FC4-RUBBoS
+tb-set-hardware $hdp104 pc3000
+
+set hshan-httpd [$ns node]
+tb-set-node-os $hshan-httpd FC4-RUBBoS
+tb-set-hardware $hshan-httpd pc3000
 
 set hshan-tomcat [$ns node]
 tb-set-node-os $hshan-tomcat FC4-RUBBoS
@@ -23,8 +27,8 @@ set hshan-mysql [$ns node]
 tb-set-node-os $hshan-mysql FC4-RUBBoS
 tb-set-hardware $hshan-mysql pc3000
 
-set lan1 [$ns make-lan "$HPD1 $hshan-bench $hshan-control " 1000Mb 0ms]
-set lan2 [$ns make-lan "$hshan-control $hshan-tomcat " 1000Mb 0ms]
+set lan1 [$ns make-lan "$HPD1 $hdp103 $hdp104 $hshan-httpd " 1000Mb 0ms]
+set lan2 [$ns make-lan "$hshan-httpd $hshan-tomcat " 1000Mb 0ms]
 set lan4 [$ns make-lan "$hshan-tomcat $hshan-mysql " 1000Mb 0ms]
 
 

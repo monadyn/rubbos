@@ -86,7 +86,7 @@ JAVACOPTS = -deprecation
 JAVACC = $(JAVAC) $(JAVACOPTS)
 RMIC = $(JAVA_HOME)/bin/rmic
 RMIREGISTRY= $(JAVA_HOME)/bin/rmiregistry
-CLASSPATH = .:$(J2EE_HOME)/lib/j2ee.jar:$(JAVA_HOME)/jre/lib/rt.jar:$(CATALINA_HOME)/common/lib/servlet-api.jar
+CLASSPATH = .:$(J2EE_HOME)/lib/j2ee.jar:$(JAVA_HOME)/jre/lib/rt.jar:$(CATALINA_HOME)/common/lib/servlet-api.jar:$(CATALINA_HOME)/lib/servlet-api.jar
 JAVADOC = $(JAVA_HOME)/bin/javadoc
 JAR = $(JAVA_HOME)/bin/jar
 
@@ -227,8 +227,10 @@ cd ..
 
 # Browse only
 
-cp --reply=yes ./workload/browse_only_transitions.txt ./workload/user_transitions.txt
-cp --reply=yes ./workload/browse_only_transitions.txt ./workload/author_transitions.txt
+#cp --reply=yes ./workload/browse_only_transitions.txt ./workload/user_transitions.txt
+#cp --reply=yes ./workload/browse_only_transitions.txt ./workload/author_transitions.txt
+cp  ./workload/browse_only_transitions.txt ./workload/user_transitions.txt -f
+cp  ./workload/browse_only_transitions.txt ./workload/author_transitions.txt -f
 <xsl:for-each select="//instances/instance[@type='client_server']">
 scp ./workload/browse_only_transitions.txt ${<xsl:value-of select="./@name"/>_HOST}:${RUBBOS_HOME}/workload/user_transitions.txt
 scp ./workload/browse_only_transitions.txt ${<xsl:value-of select="./@name"/>_HOST}:${RUBBOS_HOME}/workload/author_transitions.txt
@@ -291,12 +293,18 @@ start_seconds=`echo \( $RAMPUP / 1000 \) + $current_seconds - 60 | bc`
 SMI=`date -d "1970-01-01 $start_seconds secs UTC" +%Y%m%d%H%M%S`
 end_seconds=`echo \( $RAMPUP / 1000 + $MI / 1000 + 30 \) + $current_seconds | bc`
 EMI=`date -d "1970-01-01 $end_seconds secs UTC" +%Y%m%d%H%M%S`
+
+echo SMI
+echo EMI
 <xsl:for-each select="//instances/instance[contains(@type, '_server') and @type!='control_server']"
->ssh $<xsl:value-of select="./@name"/>_HOST "sudo nice -n -1 $RUBBOS_TOP/cpu_mem.sh $SMI $EMI" &amp;
+> echo ssh $<xsl:value-of select="./@name"/>_HOST "nice -n -1 $RUBBOS_TOP/cpu_mem.sh $SMI $EMI" &amp;
 </xsl:for-each>
 </xsl:if>
 
 make emulator
+
+echo 'rubbos emulator done!'
+echo '--------------------------------------------------------->'
 
 </content>
 </file>
@@ -397,7 +405,7 @@ SMI=`date -d "1970-01-01 $start_seconds secs UTC" +%Y%m%d%H%M%S`
 end_seconds=`echo \( $RAMPUP / 1000 + $MI / 1000 + 30 \) + $current_seconds | bc`
 EMI=`date -d "1970-01-01 $end_seconds secs UTC" +%Y%m%d%H%M%S`
 <xsl:for-each select="//instances/instance[contains(@type, '_server') and @type!='control_server']"
->ssh $<xsl:value-of select="./@name"/>_HOST "sudo nice -n -1 $RUBBOS_TOP/cpu_mem.sh $SMI $EMI" &amp;
+>ssh $<xsl:value-of select="./@name"/>_HOST "nice -n -1 $RUBBOS_TOP/cpu_mem.sh $SMI $EMI" &amp;
 </xsl:for-each>
 </xsl:if>
 

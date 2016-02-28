@@ -1,0 +1,10 @@
+#!/usr/bin/perl
+use lib "/users/Qingyang/qingyang/optabs_rubbos/tomcat_files/";
+use Time::HiRes qw(gettimeofday);
+my($sec,$microsec)=gettimeofday();
+($sec , $min , $hour , $mday , $mon , $year , $wday) = 
+localtime($sec);
+$year += 1900;
+$mon += 1;
+printf("%4.4d%2.2d%2.2d_%2.2d%2.2d%2.2d_%6.6d",
+$year,$mon,$mday,$hour,$min,$sec,$microsec);

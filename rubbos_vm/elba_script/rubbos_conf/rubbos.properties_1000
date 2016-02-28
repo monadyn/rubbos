@@ -1,6 +1,6 @@
 
 #n HTTP server information
-httpd_hostname = hshan-control
+httpd_hostname = hshan-httpd
 httpd_port = 8000
 
 # C/JDBC server to monitor (if any)
@@ -33,20 +33,20 @@ database_servers = hshan-mysql
 
 
 database_slave_servers =
-workload_remote_client_nodes = 
+workload_remote_client_nodes = hdp104
 
 
 
-workload_benchmark_node = hshan-bench
+workload_benchmark_node = hdp103
 
-workload_remote_client_command = /root/softwares/jdk1.7.0_79/bin/java -classpath .:/root/elba/rubbos/RUBBoS/Client/:/root/elba/rubbos/RUBBoS/Client/rubbos_client.jar -Xmx1300m -Dhttp.keepAlive=true -Dhttp.maxConnections=1000000 edu.rice.rubbos.client.ClientEmulator
+workload_remote_client_command = /home/hshan/elba/rubbos/jdk1.7.0_06/bin/java -classpath .:/home/hshan/elba/rubbos/RUBBoS/Client/:/home/hshan/elba/rubbos/RUBBoS/Client/rubbos_client.jar -Xmx2048m -Dhttp.keepAlive=true -Dhttp.maxConnections=1000000 edu.rice.rubbos.client.ClientEmulator
 
 
-workload_number_of_clients_per_node = 1000
+workload_number_of_clients_per_node = 500
 
 # Workload: precise which transition table to use
-workload_user_transition_table = /root/elba/rubbos/RUBBoS/workload/user_transitions.txt
-workload_author_transition_table = /root/elba/rubbos/RUBBoS/workload/author_transitions.txt
+workload_user_transition_table = /home/hshan/elba/rubbos/RUBBoS/workload/user_transitions.txt
+workload_author_transition_table = /home/hshan/elba/rubbos/RUBBoS/workload/author_transitions.txt
 workload_number_of_columns = 24
 workload_number_of_rows = 26
 workload_maximum_number_of_transitions = 1000
@@ -67,7 +67,7 @@ database_number_of_authors = 50
 database_number_of_users = 500000
 
 # Stories policy
-database_story_dictionnary = /root/elba/rubbos/RUBBoS/database/dictionary
+database_story_dictionnary = /home/hshan/elba/rubbos/RUBBoS/database/dictionary
 database_story_maximum_length = 1024
 database_oldest_story_year = 1998
 database_oldest_story_month = 1
@@ -78,7 +78,7 @@ database_comment_max_length = 1024
 
 # Monitoring Information
 monitoring_debug_level = 1
-#monitoring_program = /root/elba/rubbos/sysstat-11.2.0/sar
+#monitoring_program = /home/hshan/elba/rubbosi/sysstat-11.2.0/sar
 monitoring_program = /usr/bin/sar
 monitoring_options = -n DEV -n SOCK -rubw
 monitoring_sampling_in_seconds = 1

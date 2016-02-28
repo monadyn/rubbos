@@ -41,6 +41,7 @@ rm $MYSQL_TARBALL_RT
 ln -s $MYSQL_TARBALL_RT-sampling<xsl:value-of select="//params/logging/param[@name='mysqlResponseTime' and @value='true']/sampling/@ratio"/> $MYSQL_TARBALL_RT
     </xsl:if>
 tar xzf $SOFTWARE_HOME/$MYSQL_TARBALL_RT --directory=$RUBBOS_TOP 
+
   </xsl:when>
   <xsl:otherwise>
 tar xzf $SOFTWARE_HOME/$MYSQL_TARBALL --directory=$RUBBOS_TOP 

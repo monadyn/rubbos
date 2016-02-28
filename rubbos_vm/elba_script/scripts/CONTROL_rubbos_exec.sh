@@ -18,7 +18,7 @@ ssh $BENCHMARK_HOST "
 #  rm -rf /cap/capssd/*
 #"
 
-for i in "rubbos.properties_1000" "rubbos.properties_1600" "rubbos.properties_1800" "rubbos.properties_2000" "rubbos.properties_2200" "rubbos.properties_2400" "rubbos.properties_2600" "rubbos.properties_2800" "rubbos.properties_3000" "rubbos.properties_4000" "rubbos.properties_5000"
+for i in "rubbos.properties_1000" "rubbos.properties_2000" "rubbos.properties_4000" "rubbos.properties_5000" "rubbos.properties_6000" "rubbos.properties_7000" "rubbos.properties_8000"
 do
 
   ssh $BENCHMARK_HOST "
@@ -44,6 +44,7 @@ do
   sleep 15
 
   ssh $BENCHMARK_HOST "rm -f $RUBBOS_TOP/sar-* $RUBBOS_TOP/ps-* $RUBBOS_TOP/iostat-* /tmp/*html"
+  ssh $CLIENT1_HOST "rm -f $RUBBOS_TOP/sar-* $RUBBOS_TOP/ps-* $RUBBOS_TOP/iostat-* /tmp/*html"
   ssh $HTTPD_HOST "rm -f $RUBBOS_TOP/sar-* $RUBBOS_TOP/ps-* $RUBBOS_TOP/iostat-* /tmp/*html"
   ssh $TOMCAT1_HOST "rm -f $RUBBOS_TOP/sar-* $RUBBOS_TOP/ps-* $RUBBOS_TOP/iostat-* /tmp/*html"
   ssh $MYSQL1_HOST "rm -f $RUBBOS_TOP/sar-* $RUBBOS_TOP/ps-* $RUBBOS_TOP/iostat-* /tmp/*html"
@@ -85,26 +86,31 @@ scp $CJDBC_HOST:$CJDBC_HOME/config/virtualdatabase/mysqldb-raidb1-elba.xml ./
 
 cp -r $OUTPUT_HOME ./
 
-    scp $BENCHMARK_HOST:$RUBBOS_TOP/sar-* ./
-    scp $BENCHMARK_HOST:$RUBBOS_TOP/ps-* ./
-    scp $BENCHMARK_HOST:$RUBBOS_TOP/iostat-* ./
+ #  scp $BENCHMARK_HOST:$RUBBOS_TOP/sar-* ./
+  #  scp $BENCHMARK_HOST:$RUBBOS_TOP/ps-* ./
+  #  scp $BENCHMARK_HOST:$RUBBOS_TOP/iostat-* ./
     scp $BENCHMARK_HOST:$RUBBOS_TOP/mysql_mon-* ./
-    scp $BENCHMARK_HOST:$RUBBOS_TOP/postgres_lock-* ./
-    scp $HTTPD_HOST:$RUBBOS_TOP/sar-* ./
-    scp $HTTPD_HOST:$RUBBOS_TOP/ps-* ./
-    scp $HTTPD_HOST:$RUBBOS_TOP/iostat-* ./
+  #  scp $BENCHMARK_HOST:$RUBBOS_TOP/postgres_lock-* ./
+ #  scp $CLIENT1_HOST:$RUBBOS_TOP/sar-* ./
+  #  scp $CLIENT1_HOST:$RUBBOS_TOP/ps-* ./
+  #  scp $CLIENT1_HOST:$RUBBOS_TOP/iostat-* ./
+    scp $CLIENT1_HOST:$RUBBOS_TOP/mysql_mon-* ./
+  #  scp $CLIENT1_HOST:$RUBBOS_TOP/postgres_lock-* ./
+ #  scp $HTTPD_HOST:$RUBBOS_TOP/sar-* ./
+  #  scp $HTTPD_HOST:$RUBBOS_TOP/ps-* ./
+  #  scp $HTTPD_HOST:$RUBBOS_TOP/iostat-* ./
     scp $HTTPD_HOST:$RUBBOS_TOP/mysql_mon-* ./
-    scp $HTTPD_HOST:$RUBBOS_TOP/postgres_lock-* ./
-    scp $TOMCAT1_HOST:$RUBBOS_TOP/sar-* ./
-    scp $TOMCAT1_HOST:$RUBBOS_TOP/ps-* ./
-    scp $TOMCAT1_HOST:$RUBBOS_TOP/iostat-* ./
+  #  scp $HTTPD_HOST:$RUBBOS_TOP/postgres_lock-* ./
+ #  scp $TOMCAT1_HOST:$RUBBOS_TOP/sar-* ./
+  #  scp $TOMCAT1_HOST:$RUBBOS_TOP/ps-* ./
+  #  scp $TOMCAT1_HOST:$RUBBOS_TOP/iostat-* ./
     scp $TOMCAT1_HOST:$RUBBOS_TOP/mysql_mon-* ./
-    scp $TOMCAT1_HOST:$RUBBOS_TOP/postgres_lock-* ./
-    scp $MYSQL1_HOST:$RUBBOS_TOP/sar-* ./
-    scp $MYSQL1_HOST:$RUBBOS_TOP/ps-* ./
-    scp $MYSQL1_HOST:$RUBBOS_TOP/iostat-* ./
+  #  scp $TOMCAT1_HOST:$RUBBOS_TOP/postgres_lock-* ./
+ #  scp $MYSQL1_HOST:$RUBBOS_TOP/sar-* ./
+  #  scp $MYSQL1_HOST:$RUBBOS_TOP/ps-* ./
+  #  scp $MYSQL1_HOST:$RUBBOS_TOP/iostat-* ./
     scp $MYSQL1_HOST:$RUBBOS_TOP/mysql_mon-* ./
-    scp $MYSQL1_HOST:$RUBBOS_TOP/postgres_lock-* ./
+  #  scp $MYSQL1_HOST:$RUBBOS_TOP/postgres_lock-* ./
 
     ## collect esxtop information       
     #$OUTPUT_HOME/endEsxtopMonitor.sh
@@ -169,6 +175,14 @@ echo "Start processing RUBBoS experimental results in Bonn"
   cp $BONN_SCRIPTS_BASE/generateResult.sh ./
   cp $BONN_SCRIPTS_BASE/transferScripts.sh ./
   cp $BONN_SCRIPTS_BASE/data*.py ./
+
+  cp $BONN_SCRIPTS_BASE/hshan_debug.sh ./
+
+  cp $BONN_SCRIPTS_BASE/aggregate*.py ./
+
+#temp
+# cp /sshfsmount/elba_script/set_elba_env.sh ./
+
   ./generateResult.sh
   sleep 2
 #  ./transferScripts.sh
@@ -179,16 +193,26 @@ echo "Finish processing RUBBoS Result in Bonn"
 #sleep 10
 #echo "start processing RUBBoS experimental SysViz result"
 #ssh $SYSVIZ_HOST "
-#chmod 777 $SYSVIZ_RUBBOS_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME/*.sh
-#cd $SYSVIZ_RUBBOS_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME
-#./resultAnalysis.sh
+cd $SYSVIZ_RUBBOS_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME
+cp $BONN_SCRIPTS_BASE/resultAnalysis.sh ./
+#cp $BONN_SCRIPTS_BASE/rubbosAnalyze10_linux_4tier_middleTwoTier.py ./
+
+cp $BONN_SCRIPTS_BASE/gen_*.sh ./
+cp $BONN_SCRIPTS_BASE/Pre_*.py ./
+
+chmod 777 $SYSVIZ_RUBBOS_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME/*.sh
+chmod 777 $SYSVIZ_RUBBOS_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME/*.py
+
+cd $SYSVIZ_RUBBOS_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME
+./protoTimeWindows.sh
+./resultAnalysis.sh
+#pwd
+./gen_graph_main.sh
+./hshan_debug.sh
+
 #"
 
 echo "Finish RUBBoS"
-
-
-
-
 
 
 

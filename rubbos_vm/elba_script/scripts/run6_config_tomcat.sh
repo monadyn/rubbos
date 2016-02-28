@@ -9,7 +9,6 @@ cd /sshfsmount/elba_script/scripts
 ssh $TOMCAT1_HOST /tmp/TOMCAT1_configure.sh 
 
 
-ssh $HTTPD_HOST /tmp/HTTPD_configure.sh 
 
 
 exit(0)

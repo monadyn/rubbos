@@ -63,8 +63,7 @@ echo "  CONFIGURING MYSQL on $HOSTNAME"
   echo bin/mysqladmin --socket=$MYSQL_SOCKET --user=root --password=$ROOT_PASSWORD shutdown
 
 # copy rubbos data files
-#  tar xzf $SOFTWARE_HOME/$RUBBOS_DATA_TARBALL --directory=$MYSQL_HOME/data/rubbos
-  tar xzf $SOFTWARE_HOME/$RUBBOS_DATA_TARBALL --directory=$MYSQL_HOME/data/
+  tar xzf $SOFTWARE_HOME/$RUBBOS_DATA_TARBALL --directory=$MYSQL_HOME/data/rubbos
   sleep 5
 
 echo "  DONE CONFIGURING MYSQL on $HOSTNAME"

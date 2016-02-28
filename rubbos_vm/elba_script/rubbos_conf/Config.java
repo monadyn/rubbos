@@ -45,9 +45,9 @@ public class Config
   }
 
 
-  public static final String HTMLFilesPath                 = "/root/elba/rubbos/RUBBoS/Servlet_HTML";
-  //public static final String[] DatabaseProperties          = {"/root/elba/rubbos/RUBBoS/Servlets/mysql.properties"};
-  public static final String DatabaseProperties          = "/root/elba/rubbos/RUBBoS/Servlets/mysql.properties";
+  public static final String HTMLFilesPath                 = "/home/hshan/elba/rubbos/RUBBoS/Servlet_HTML";
+  public static final String[] DatabaseProperties          = {"/home/hshan/elba/rubbos/RUBBoS/Servlets/mysql.properties"};
+  //public static final String DatabaseProperties          = "/home/hshan/elba/rubbos/RUBBoS/Servlets/mysql.properties";
   public static final int DatabasePropertiesSize = 1;
 
   public static final int    AboutMePoolSize               = 10;

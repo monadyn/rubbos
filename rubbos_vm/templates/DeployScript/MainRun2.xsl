@@ -32,6 +32,14 @@ cd <xsl:value-of select="//params/env/param[@name='OUTPUT_HOME']/@value"/>/scrip
 
 # Transfer all sub scripts to target hosts
 echo "*** scp scripts *************************************************"
+<xsl:for-each select="//instances/instance">
+ssh $<xsl:value-of select="./@name"/>_HOST rm /tmp/*.sh -rf
+scp -o StrictHostKeyChecking=no -o BatchMode=yes ../set_elba_env.sh  $<xsl:value-of select="./@name"/>_HOST:/tmp
+scp -o StrictHostKeyChecking=no -o BatchMode=yes ../endCollectl.sh  $<xsl:value-of select="./@name"/>_HOST:/tmp
+scp -o StrictHostKeyChecking=no -o BatchMode=yes ../collectlMonitor.sh  $<xsl:value-of select="./@name"/>_HOST:/tmp
+#scp -o StrictHostKeyChecking=no -o BatchMode=yes ../cpu_mem.sh  $<xsl:value-of select="./@name"/>_HOST:/tmp
+
+</xsl:for-each>
 <xsl:for-each select="//instances/instance/action">
 scp -o StrictHostKeyChecking=no -o BatchMode=yes <xsl:value-of select="../@name"/>_<xsl:value-of select="./@type"/>.sh  $<xsl:value-of select="../@name"/>_HOST:/tmp
 </xsl:for-each>
@@ -151,8 +159,8 @@ BONN_RUBBOS_RESULTS_DIR_BASE=<xsl:value-of select="//params/env/param[@name='RUB
 BONN_SCRIPTS_BASE=<xsl:value-of select="//params/env/param[@name='BONN_SCRIPTS_BASE']/@value"/>
 
 
-SYSVIZ_HOST=qywang@incheon.cc.gt.atl.ga.us
-SYSVIZ_RUBBOS_RESULTS_DIR_BASE=/home/qywang/AnaResult-CA
+SYSVIZ_HOST=hdp1
+SYSVIZ_RUBBOS_RESULTS_DIR_BASE=/home/hshan/rubbos/results
 
 
 
@@ -241,7 +249,7 @@ ELBA_USER=<xsl:value-of select="//params/env/param[@name='ELBA_USER']/@value"/>
 ELBA_PASSWORD=<xsl:value-of select="//params/env/param[@name='ELBA_PASSWORD']/@value"/>
 
 
-CLASSPATH=$CLASSPATH:$JONAS_ROOT/bin/unix/registry:$JAVA_HOME:$JAVA_HOME/lib/tools.jar:$CATALINA_HOME/common/lib/servlet-api.jar:.:$RUBBOS_HOME/Servlet_HTML/WEB-INF/lib/log4j.jar
+CLASSPATH=$CLASSPATH:$JONAS_ROOT/bin/unix/registry:$JAVA_HOME:$JAVA_HOME/lib/tools.jar:$CATALINA_HOME/lib/servlet-api.jar:$CATALINA_HOME/common/lib/servlet-api.jar:.:$RUBBOS_HOME/Servlet_HTML/WEB-INF/lib/log4j.jar
 
 PATH=$JAVA_HOME/bin:$JONAS_ROOT/bin/unix:$ANT_HOME/bin:$CATALINA_HOME/bin:$PATH
 set +o allexport

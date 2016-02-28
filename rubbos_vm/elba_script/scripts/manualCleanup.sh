@@ -7,12 +7,13 @@ source set_elba_env.sh
 echo "Uninstalling ...."
 
 ssh $BENCHMARK_HOST /tmp/BENCHMARK_uninstall.sh
+ssh $CLIENT1_HOST /tmp/CLIENT1_uninstall.sh
 ssh $HTTPD_HOST /tmp/HTTPD_uninstall.sh
 ssh $TOMCAT1_HOST /tmp/TOMCAT1_uninstall.sh
 ssh $MYSQL1_HOST /tmp/MYSQL1_uninstall.sh
 
 echo "Cleaning up ...."
-for i in "$BENCHMARK_HOST" "$HTTPD_HOST" "$TOMCAT1_HOST" "$MYSQL1_HOST"
+for i in "$BENCHMARK_HOST" "$CLIENT1_HOST" "$HTTPD_HOST" "$TOMCAT1_HOST" "$MYSQL1_HOST"
 do
   ssh $i "
     sudo \rm -r $RUBBOS_TOP
@@ -27,6 +28,11 @@ ssh $BENCHMARK_HOST  rm -f /tmp/BENCHMARK_install.sh
 ssh $BENCHMARK_HOST  rm -f /tmp/BENCHMARK_configure.sh
 ssh $BENCHMARK_HOST  rm -f /tmp/BENCHMARK_uninstall.sh
 ssh $BENCHMARK_HOST  rm -f /tmp/BENCHMARK_rubbos_uninstall.sh
+ssh $CLIENT1_HOST  rm -f /tmp/CLIENT1_rubbos_install.sh
+ssh $CLIENT1_HOST  rm -f /tmp/CLIENT1_install.sh
+ssh $CLIENT1_HOST  rm -f /tmp/CLIENT1_configure.sh
+ssh $CLIENT1_HOST  rm -f /tmp/CLIENT1_uninstall.sh
+ssh $CLIENT1_HOST  rm -f /tmp/CLIENT1_rubbos_uninstall.sh
 ssh $HTTPD_HOST  rm -f /tmp/HTTPD_install.sh
 ssh $HTTPD_HOST  rm -f /tmp/HTTPD_rubbos_install.sh
 ssh $HTTPD_HOST  rm -f /tmp/HTTPD_configure.sh

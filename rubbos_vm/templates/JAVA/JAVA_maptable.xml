@@ -1,0 +1,45 @@
+<maptables>
+  <maptable to="type">
+    <mapping from="byte"    to="byte"/>
+    <mapping from="char"    to="char"/>
+    <mapping from="integer" to="int"/>
+    <mapping from="float"   to="float"/>
+    <mapping from="double"  to="double"/>
+    <mapping from="long"    to="long"/>
+    <mapping from="string"  to="String"/>
+    <mapping from="integer_array(-1)" to="Vector"/>
+    <mapping from="float_array(-1)" to="Vector"/>
+    <mapping from="double_array(-1)" to="Vector"/>
+    <mapping from="long_array(-1)" to="Vector"/>
+    <mapping from="string_array(-1)" to="Vector"/>
+  </maptable>
+  <maptable to="init">
+    <mapping from="byte()"    to="0"/>
+    <mapping from="char()"    to="''"/>
+    <mapping from="integer(0)"  to="0"/>
+    <mapping from="float(0)"   to="0"/>
+    <mapping from="double(0.0)"  to="0.0"/>
+    <mapping from="long(0)"    to="0L"/>
+    <mapping from="string(null)"  to="null"/>
+    <mapping from="integer_array(0)" to="new Vector(0)"/>
+    <mapping from="float_array(0)" to="new Vector(0)"/>
+    <mapping from="double_array(0)" to="new Vector(0)"/>
+    <mapping from="long_array(0)" to="new Vector(0)"/>
+    <mapping from="string_array(0)" to="new Vector(0)"/>
+  </maptable>
+  <maptable to="type_object">
+    <mapping from="byte"    to="Byte"/>
+    <mapping from="char"    to="Character"/>
+    <mapping from="integer" to="Integer"/>
+    <mapping from="float"   to="Float"/>
+    <mapping from="double"  to="Double"/>
+    <mapping from="long"    to="Long"/>
+  </maptable>
+  <maptable to="type_parser">
+    <mapping from="byte"    to="parseByte"/>
+    <mapping from="integer" to="parseInt"/>
+    <mapping from="float"   to="parseFloat"/>
+    <mapping from="double"  to="parseDouble"/>
+    <mapping from="long"    to="parseLong"/>
+  </maptable>  
+</maptables>

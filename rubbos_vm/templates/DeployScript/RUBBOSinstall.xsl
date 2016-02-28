@@ -33,11 +33,11 @@ tar xzf $SOFTWARE_HOME/$RUBBOS_TARBALL --directory=$RUBBOS_TOP
 cp $SOFTWARE_HOME/flush_cache $RUBBOS_HOME/bench/.
 
 # install sysstat
-tar xzf $SOFTWARE_HOME/$SYSSTAT_TARBALL --directory=$RUBBOS_TOP
-cp $OUTPUT_HOME/sysstat_conf/CONFIG $SYSSTAT_HOME/build/
-cd $SYSSTAT_HOME
-./configure
-make
+#tar xzf $SOFTWARE_HOME/$SYSSTAT_TARBALL --directory=$RUBBOS_TOP
+#cp $OUTPUT_HOME/sysstat_conf/CONFIG $SYSSTAT_HOME/build/
+#cd $SYSSTAT_HOME
+#./configure
+#make
 #sudo make install
 
 # install a script to collect statistics data
