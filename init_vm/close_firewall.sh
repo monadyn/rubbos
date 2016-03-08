@@ -1,6 +1,6 @@
 setenforce 0
-service iptables status
+sudo service iptables status
 echo systemctl stop firewalld
-service iptables stop
+sudo service iptables stop
 echo '-->'
-service iptables status
+sudo service iptables status
