@@ -1,0 +1,8 @@
+uname -r
+
+
+
+docker version
+
+
+
