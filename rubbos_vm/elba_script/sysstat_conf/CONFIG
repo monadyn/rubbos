@@ -3,11 +3,11 @@
 # (C) 2000-2006 Sebastien GODARD (sysstat <at> wanadoo.fr)
 
 # Directories
-PREFIX = /root/elba/rubbos/sysstat-11.2.0
-SA_LIB_DIR = /root/elba/rubbos/sysstat-11.2.0/lib/sa
+PREFIX = /home/hshan/elba/rubbosi/sysstat-11.2.0
+SA_LIB_DIR = /home/hshan/elba/rubbosi/sysstat-11.2.0/lib/sa
 SADC_PATH = ${SA_LIB_DIR}/sadc
-SA_DIR = /root/elba/rubbos/sysstat-11.2.0/var/log/sa
-MAN_DIR = /root/elba/rubbos/sysstat-11.2.0/man
+SA_DIR = /home/hshan/elba/rubbosi/sysstat-11.2.0/var/log/sa
+MAN_DIR = /home/hshan/elba/rubbosi/sysstat-11.2.0/man
 CLEAN_SA_DIR = n
 YESTERDAY = 
 HISTORY = 7

@@ -24,15 +24,22 @@ cd ..
 
 # Browse only
 
-cp --reply=yes ./workload/browse_only_transitions.txt ./workload/user_transitions.txt
-cp --reply=yes ./workload/browse_only_transitions.txt ./workload/author_transitions.txt
+#cp --reply=yes ./workload/browse_only_transitions.txt ./workload/user_transitions.txt
+#cp --reply=yes ./workload/browse_only_transitions.txt ./workload/author_transitions.txt
+cp  ./workload/browse_only_transitions.txt ./workload/user_transitions.txt -f
+cp  ./workload/browse_only_transitions.txt ./workload/author_transitions.txt -f
 
+scp ./workload/browse_only_transitions.txt ${CLIENT1_HOST}:${RUBBOS_HOME}/workload/user_transitions.txt
+scp ./workload/browse_only_transitions.txt ${CLIENT1_HOST}:${RUBBOS_HOME}/workload/author_transitions.txt
+
+scp Client/rubbos.properties ${CLIENT1_HOST}:${RUBBOS_HOME}/Client/rubbos.properties
 
 
 bench/flush_cache 490000
 ssh $HTTPD_HOST "$RUBBOS_HOME/bench/flush_cache 880000"       # web server
 ssh $MYSQL1_HOST "$RUBBOS_HOME/bench/flush_cache 880000"       # database server
 ssh $TOMCAT1_HOST "$RUBBOS_HOME/bench/flush_cache 780000"       # servlet server
+ssh $CLIENT1_HOST "$RUBBOS_HOME/bench/flush_cache 490000"       # remote client
 
 RAMPUP=120000
 MI=180000
@@ -41,11 +48,18 @@ start_seconds=`echo \( $RAMPUP / 1000 \) + $current_seconds - 60 | bc`
 SMI=`date -d "1970-01-01 $start_seconds secs UTC" +%Y%m%d%H%M%S`
 end_seconds=`echo \( $RAMPUP / 1000 + $MI / 1000 + 30 \) + $current_seconds | bc`
 EMI=`date -d "1970-01-01 $end_seconds secs UTC" +%Y%m%d%H%M%S`
-ssh $BENCHMARK_HOST "sudo nice -n -1 $RUBBOS_TOP/cpu_mem.sh $SMI $EMI" &
-ssh $HTTPD_HOST "sudo nice -n -1 $RUBBOS_TOP/cpu_mem.sh $SMI $EMI" &
-ssh $TOMCAT1_HOST "sudo nice -n -1 $RUBBOS_TOP/cpu_mem.sh $SMI $EMI" &
-ssh $MYSQL1_HOST "sudo nice -n -1 $RUBBOS_TOP/cpu_mem.sh $SMI $EMI" &
+
+echo SMI
+echo EMI
+ echo ssh $BENCHMARK_HOST "nice -n -1 $RUBBOS_TOP/cpu_mem.sh $SMI $EMI" &
+ echo ssh $CLIENT1_HOST "nice -n -1 $RUBBOS_TOP/cpu_mem.sh $SMI $EMI" &
+ echo ssh $HTTPD_HOST "nice -n -1 $RUBBOS_TOP/cpu_mem.sh $SMI $EMI" &
+ echo ssh $TOMCAT1_HOST "nice -n -1 $RUBBOS_TOP/cpu_mem.sh $SMI $EMI" &
+ echo ssh $MYSQL1_HOST "nice -n -1 $RUBBOS_TOP/cpu_mem.sh $SMI $EMI" &
 
 
 make emulator
+
+echo 'rubbos emulator done!'
+echo '--------------------------------------------------------->'
 

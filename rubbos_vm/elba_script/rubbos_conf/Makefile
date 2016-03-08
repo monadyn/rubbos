@@ -51,10 +51,10 @@ initDB:
 	${JAVA} -classpath .:./database edu.rice.rubbos.client.InitDB ${PARAM}
 
 emulator:
-	${JAVA} -classpath Client:Client/rubbos_client.jar:. -Xmx1300m -Dhttp.keepAlive=true -Dhttp.maxConnections=1000000 edu.rice.rubbos.client.ClientEmulator
+	${JAVA} -classpath Client:Client/rubbos_client.jar:. -Xmx2048m -Dhttp.keepAlive=true -Dhttp.maxConnections=1000000 edu.rice.rubbos.client.ClientEmulator
 
 emulatorDebug:
-	${JAVA} -classpath Client:Client/rubbos_client.jar:. -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -Xmx1300m -Dhttp.keepAlive=true -Dhttp.maxConnections=1000000 edu.rice.rubbos.client.ClientEmulator
+	${JAVA} -classpath Client:Client/rubbos_client.jar:. -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -Xmx2048m -Dhttp.keepAlive=true -Dhttp.maxConnections=1000000 edu.rice.rubbos.client.ClientEmulator
 
 
 ############################

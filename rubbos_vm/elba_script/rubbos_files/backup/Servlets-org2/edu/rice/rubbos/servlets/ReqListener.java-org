@@ -1,0 +1,53 @@
+package edu.rice.rubbos.servlets;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletRequestListener;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletRequestEvent;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+public class ReqListener implements ServletRequestListener {
+
+    private Calendar cal;
+    //no args constructor made explicit here
+    public ReqListener(){}
+
+  public void requestInitialized(ServletRequestEvent sre){
+
+      //used for logging purposes
+      ServletContext context =sre.getServletContext();
+      //Used to get information about a new request
+      ServletRequest request =sre.getServletRequest();
+      cal = new GregorianCalendar();
+      synchronized (context){
+          context.log(
+            "Request Thread:" + Thread.currentThread().getName() + " "+
+            (request instanceof HttpServletRequest ?
+            ((HttpServletRequest)request).getRequestURI():
+             "Unknown")+" "+cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)+":"+cal.get(Calendar.SECOND)+":"+cal.get(Calendar.MILLISECOND));
+      }//synchronized
+}
+
+  public void requestDestroyed(ServletRequestEvent sre){
+      //used for logging purposes
+      ServletContext context =sre.getServletContext();
+      cal = new GregorianCalendar();
+      //Used to get information about a new request
+      ServletRequest request =sre.getServletRequest();
+      synchronized (context){
+          context.log(
+            "Response Thread:" + Thread.currentThread().getName() + " "+
+            (request instanceof HttpServletRequest ?
+            ((HttpServletRequest)request).getRequestURI():
+             "Unknown")+" "+cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)+":"+cal.get(Calendar.SECOND)+":"+cal.get(Calendar.MILLISECOND));
+      }//synchronized
+  }//requestDestroyed
+}// ReqListener
+

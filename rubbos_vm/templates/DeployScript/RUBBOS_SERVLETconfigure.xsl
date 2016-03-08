@@ -364,8 +364,8 @@ public class Config
 
 
   public static final String HTMLFilesPath                 = "<xsl:value-of select="//params/env/param[@name='RUBBOS_HOME']/@value"/>/Servlet_HTML";
-  //public static final String[] DatabaseProperties          = {"<xsl:value-of select="//params/env/param[@name='RUBBOS_HOME']/@value"/>/Servlets/mysql.properties"};
-  public static final String DatabaseProperties          = "<xsl:value-of select="//params/env/param[@name='RUBBOS_HOME']/@value"/>/Servlets/mysql.properties";
+  public static final String[] DatabaseProperties          = {"<xsl:value-of select="//params/env/param[@name='RUBBOS_HOME']/@value"/>/Servlets/mysql.properties"};
+  //public static final String DatabaseProperties          = "<xsl:value-of select="//params/env/param[@name='RUBBOS_HOME']/@value"/>/Servlets/mysql.properties";
   public static final int DatabasePropertiesSize = 1;
 
   public static final int    AboutMePoolSize               = 10;

@@ -161,11 +161,11 @@ scp $CJDBC_HOST:$CJDBC_HOME/config/virtualdatabase/mysqldb-raidb1-elba.xml ./
 cp -r $OUTPUT_HOME ./
 
 <xsl:for-each select="//instances/instance[contains(@type, '_server') and @type!='control_server']"
->    scp $<xsl:value-of select="./@name"/>_HOST:$RUBBOS_TOP/sar-* ./
-    scp $<xsl:value-of select="./@name"/>_HOST:$RUBBOS_TOP/ps-* ./
-    scp $<xsl:value-of select="./@name"/>_HOST:$RUBBOS_TOP/iostat-* ./
+> #  scp $<xsl:value-of select="./@name"/>_HOST:$RUBBOS_TOP/sar-* ./
+  #  scp $<xsl:value-of select="./@name"/>_HOST:$RUBBOS_TOP/ps-* ./
+  #  scp $<xsl:value-of select="./@name"/>_HOST:$RUBBOS_TOP/iostat-* ./
     scp $<xsl:value-of select="./@name"/>_HOST:$RUBBOS_TOP/mysql_mon-* ./
-    scp $<xsl:value-of select="./@name"/>_HOST:$RUBBOS_TOP/postgres_lock-* ./
+  #  scp $<xsl:value-of select="./@name"/>_HOST:$RUBBOS_TOP/postgres_lock-* ./
 </xsl:for-each>
     ## collect esxtop information       
     #$OUTPUT_HOME/endEsxtopMonitor.sh
@@ -318,6 +318,14 @@ echo "Start processing RUBBoS experimental results in Bonn"
   cp $BONN_SCRIPTS_BASE/generateResult.sh ./
   cp $BONN_SCRIPTS_BASE/transferScripts.sh ./
   cp $BONN_SCRIPTS_BASE/data*.py ./
+
+  cp $BONN_SCRIPTS_BASE/hshan_debug.sh ./
+
+  cp $BONN_SCRIPTS_BASE/aggregate*.py ./
+
+#temp
+# cp /sshfsmount/elba_script/set_elba_env.sh ./
+
   ./generateResult.sh
   sleep 2
 #  ./transferScripts.sh
@@ -328,9 +336,23 @@ echo "Finish processing RUBBoS Result in Bonn"
 #sleep 10
 #echo "start processing RUBBoS experimental SysViz result"
 #ssh $SYSVIZ_HOST "
-#chmod 777 $SYSVIZ_RUBBOS_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME/*.sh
-#cd $SYSVIZ_RUBBOS_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME
-#./resultAnalysis.sh
+cd $SYSVIZ_RUBBOS_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME
+cp $BONN_SCRIPTS_BASE/resultAnalysis.sh ./
+#cp $BONN_SCRIPTS_BASE/rubbosAnalyze10_linux_4tier_middleTwoTier.py ./
+
+cp $BONN_SCRIPTS_BASE/gen_*.sh ./
+cp $BONN_SCRIPTS_BASE/Pre_*.py ./
+
+chmod 777 $SYSVIZ_RUBBOS_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME/*.sh
+chmod 777 $SYSVIZ_RUBBOS_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME/*.py
+
+cd $SYSVIZ_RUBBOS_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME
+./protoTimeWindows.sh
+./resultAnalysis.sh
+#pwd
+./gen_graph_main.sh
+./hshan_debug.sh
+
 #"
 
 echo "Finish RUBBoS"

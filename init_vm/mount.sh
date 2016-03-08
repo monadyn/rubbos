@@ -6,5 +6,5 @@ lsmod | grep fuse
 mkdir -p /sshfsmount
 
 echo 'tbd, need login remote server'
-sshfs hshan@hdp1:/home/hshan/rubbos/rubbos/rubbos_vm /sshfsmount
+sshfs -o reconnect hshan@hdp1:/home/hshan/rubbos/rubbos/rubbos_vm /sshfsmount
 ls -aul /sshfsmount

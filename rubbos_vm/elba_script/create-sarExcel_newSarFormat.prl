@@ -1,0 +1,491 @@
+#!/usr/bin/perl
+
+# Setting for summer-time
+#
+# 0: Not summer-time
+# 1: Summer-time
+# 2: Auto-detect (This option assumes summer-time at the first trial.
+#                 If it fails, then it tries non-summer-time next.)
+$summer_time = 2;
+
+@servers = ("web_server", "servlets_server1","servlets_server2", "cjdbc_server", "db_server1", "db_server2");
+@prefixs = ("WEB", "APP1","APP2", "CJDBC", "DB1","DB2");
+
+
+system("rm tmp-dirlist");
+system("ls -d 20* | grep -v '.tgz' > tmp-dirlist");
+open (DIR_LIST, "tmp-dirlist");
+$dir_index = 0;
+while (<DIR_LIST>) {
+  chop;
+  $dir_name = $_;
+
+  #### Get length of up_ramp & session_run. Get the number of workload. ####
+  open(INDEX_FILE, "$dir_name/index.html");
+  LINE: foreach $line (<INDEX_FILE>) {
+    if ($line =~ "Up ramp time in ms") {
+      for ($i = 0; $i < 5; $i++) {
+	chop($line);
+      }
+      $up_ramp_time = substr($line, 33);
+      $up_ramp_time /= 1000;
+    }
+    elsif ($line =~ "Session run time in ms") {
+      for ($i = 0; $i < 5; $i++) {
+	chop($line);
+      }
+      $run_time = substr($line, 33);
+      $run_time /= 1000;
+    }
+    elsif ($line =~ "Total number of clients for this experiment") {
+      for ($i = 0; $i < 5; $i++) {
+	chop($line);
+      }
+      $wload = substr($line, 45);
+      last(LINE);
+    }
+  }
+  close(INDEX_FILE);
+  print("dir = $dir_name, up_ramp_time = $up_ramp_time, run_time = $run_time, workload = $wload\n");
+  $workload[$dir_index] = $wload;
+
+  #### Get start & end time ####
+  @perf_files = ("perf.html", "stat_client0.html", "stat_client1.html", "stat_client2.html",
+		 "stat_client3.html", "stat_client4.html");
+ EXTRACT_START_TIME: foreach $perf_file (@perf_files) {
+    $found = 0;
+    open(PERF_FILE, "$dir_name/$perf_file");
+  LINE: foreach $line (<PERF_FILE>) {
+      if ($line =~ "Runtime session start") {
+	$found++;
+	$start_time = substr($line, 40, 19);
+	$st_YYYY = substr($start_time, 0, 4);
+	$st_MM = substr($start_time, 5, 2);
+	$st_DD = substr($start_time, 8, 2);
+	$st_hh = substr($start_time, 11, 2);
+	$st_mm = substr($start_time, 14, 2);
+	$st_ss = substr($start_time, 17, 2);
+      }
+      elsif ($line =~ "Down ramp start") {
+	$found++;
+	$end_time = substr($line, 34, 19);
+	$et_YYYY = substr($end_time, 0, 4);
+	$et_MM = substr($end_time, 5, 2);
+	$et_DD = substr($end_time, 8, 2);
+	$et_hh = substr($end_time, 11, 2);
+	$et_mm = substr($end_time, 14, 2);
+	$et_ss = substr($end_time, 17, 2);
+	last(LINE);
+      }
+    }
+    close(PERF_FILE);
+    if ($found == 2) {
+      last(EXTRACT_START_TIME);
+    }
+  }
+  print(" start = $st_YYYY/$st_MM/$st_DD $st_hh:$st_mm:$st_ss, ");
+  print("end = $et_YYYY/$et_MM/$et_DD $et_hh:$et_mm:$et_ss\n");
+
+  #### Read each server files ####
+  for ($server_index = 0; $server_index <= $#servers; $server_index++) {
+    $server_name = $servers[$server_index];
+    print(" - $server_name: ");
+    system("gzip -d $dir_name/$server_name.gz");
+
+    # Set a variable for summer-time
+    $tmp_summer_time = $summer_time;
+    if ($summer_time == 2) {
+      $tmp_summer_time = 1;
+    }
+
+  RETRY_SUMMER_TIME:
+    #### Process log files of MYSQL ####
+    $start_time = sprintf("%2.2d:%2.2d:%2.2d", $st_hh + $tmp_summer_time, $st_mm, $st_ss);
+    if (($st_hh eq "23") && ($tmp_summer_time == 1)) {
+      $start_time = sprintf("00:%2.2d:%2.2d", $st_mm, $st_ss);
+    }
+    print("start_time = $start_time, ");
+    $end_time = sprintf("%2.2d:%2.2d:%2.2d", $et_hh + $tmp_summer_time, $et_mm, $et_ss);
+    if (($et_hh eq "23") && ($tmp_summer_time == 1)) {
+      $end_time = sprintf("00:%2.2d:%2.2d", $et_mm, $et_ss);
+    }
+    print("end_time = $end_time\n");
+
+    open(SERVER_FILE, "$dir_name/$server_name");
+    <SERVER_FILE>;
+    $mode = 0;
+    $count = 0;
+  LINE: foreach $line (<SERVER_FILE>) {
+      if ($line =~ "Average") {
+	$mode++;
+	# Check whether the summer-time setting is correct or not
+	if (($mode == 1) && ($count == 0)) {
+	  if (($summer_time == 2) && ($tmp_summer_time == 1)) {
+	    print("   It looks like it was not executed during summer-time period.: dir_name = $dir_name\n");
+	    print("   Retry: ");
+	    $tmp_summer_time = 0;
+	    close(SERVER_FILE);
+	    goto(RETRY_SUMMER_TIME);
+	  }
+	  else {
+	    print("WARN: No data: dir_name = $dir_name\n");
+	    goto(NEXT_SERVER);
+	  }
+	}
+	next(LINE);
+      }
+      if (($mode < 22) && ($line =~ "kbmemfree")) {
+	$mode = 22;
+      }
+      chop($line);
+      #skip unnecessary lines
+      if ($line eq "") {
+	next(LINE);
+      }
+      @line2 = split(/[\s\t]+/, $line);
+      $time = $line2[0];
+      if ($start_time lt $end_time) {
+	if (($time lt $start_time) || ($time ge $end_time)) {
+	  next(LINE);
+	}
+      }
+      else {
+	if (($time lt $start_time) && ($time ge $end_time)) {
+	  next(LINE);
+	}
+      }
+      $hkey = sprintf("%2d-%s", $dir_index, $time);
+      
+      # CPU
+      if ($mode == 0) {
+	if ($line =~ "CPU") {
+	  next(LINE);
+	}
+	$cpu_user{$hkey}[$server_index] = $line2[2];
+	$cpu_nice{$hkey}[$server_index] = $line2[3];
+	$cpu_system{$hkey}[$server_index] = $line2[4];
+	$cpu_iowait{$hkey}[$server_index] = $line2[5];
+	$cpu_steal{$hkey}[$server_index] = $line2[6];
+	$cpu_used{$hkey}[$server_index] = $line2[2] + $line2[3] + $line2[4];
+	$cpu_idle{$hkey}[$server_index] = $line2[7];
+      }
+      # proc/s and context switch
+      elsif ($mode == 1) {
+	if ($line =~ "proc/s") {
+	  next(LINE);
+	}
+	$proc{$hkey}[$server_index] = $line2[1];
+
+	# context switch
+	$cswch{$hkey}[$server_index] = $line2[2];
+	$count++;
+      }
+      # Disk I/O
+      elsif ($mode == 2) {
+	if ($line =~ "bread") {
+	  next(LINE);
+	}
+	$disk_tps{$hkey}[$server_index] = $line2[1];
+	$disk_rtps{$hkey}[$server_index] = $line2[2];
+	$disk_wtps{$hkey}[$server_index] = $line2[3];
+	$disk_bread{$hkey}[$server_index] = $line2[4];
+	$disk_bwrtn{$hkey}[$server_index] = $line2[5];
+      }
+      # Memory
+      elsif ($mode == 3) {
+	if ($line =~ "kbmemfree") {
+	  next(LINE);
+	}
+	$kbmemfree{$hkey}[$server_index] = $line2[1];
+	$kbmemused{$hkey}[$server_index] = $line2[2];
+	$memused{$hkey}[$server_index]   = $line2[3];
+	$kbbuffers{$hkey}[$server_index] = $line2[4];
+	$kbcached{$hkey}[$server_index]  = $line2[5];
+	$kbswpfree{$hkey}[$server_index] = $line2[6];
+	$kbswpused{$hkey}[$server_index] = $line2[7];
+	$swpused{$hkey}[$server_index]   = $line2[8];
+	$kbswpcad{$hkey}[$server_index]  = $line2[9];
+      }
+      # Network
+      elsif ($mode == 4) {
+	if (($line =~ "IFACE") || ($line =~ "lo") || ($line =~ "sit0")) {
+	  next(LINE);
+	}
+	if ($line2[1] eq "eth0") {
+	  $eth0_rxpck{$hkey}[$server_index] = $line2[2];
+	  $eth0_txpck{$hkey}[$server_index] = $line2[3];
+	  $eth0_rxbyt{$hkey}[$server_index] = $line2[4];
+	  $eth0_txbyt{$hkey}[$server_index] = $line2[5];
+	  $eth0_rxcmp{$hkey}[$server_index] = $line2[6];
+	  $eth0_txcmp{$hkey}[$server_index] = $line2[7];
+	  $eth0_rxmcst{$hkey}[$server_index] = $line2[8];
+	}
+	elsif ($line2[1] eq "eth1") {
+	  $eth1_rxpck{$hkey}[$server_index] = $line2[2];
+	  $eth1_txpck{$hkey}[$server_index] = $line2[3];
+	  $eth1_rxbyt{$hkey}[$server_index] = $line2[4];
+	  $eth1_txbyt{$hkey}[$server_index] = $line2[5];
+	  $eth1_rxcmp{$hkey}[$server_index] = $line2[6];
+	  $eth1_txcmp{$hkey}[$server_index] = $line2[7];
+	  $eth1_rxmcst{$hkey}[$server_index] = $line2[8];
+	}
+	elsif ($line2[1] eq "eth2") {
+	  $eth2_rxpck{$hkey}[$server_index] = $line2[2];
+	  $eth2_txpck{$hkey}[$server_index] = $line2[3];
+	  $eth2_rxbyt{$hkey}[$server_index] = $line2[4];
+	  $eth2_txbyt{$hkey}[$server_index] = $line2[5];
+	  $eth2_rxcmp{$hkey}[$server_index] = $line2[6];
+	  $eth2_txcmp{$hkey}[$server_index] = $line2[7];
+	  $eth2_rxmcst{$hkey}[$server_index] = $line2[8];
+	}
+	elsif ($line2[1] eq "eth3") {
+	  $eth3_rxpck{$hkey}[$server_index] = $line2[2];
+	  $eth3_txpck{$hkey}[$server_index] = $line2[3];
+	  $eth3_rxbyt{$hkey}[$server_index] = $line2[4];
+	  $eth3_txbyt{$hkey}[$server_index] = $line2[5];
+	  $eth3_rxcmp{$hkey}[$server_index] = $line2[6];
+	  $eth3_txcmp{$hkey}[$server_index] = $line2[7];
+	  $eth3_rxmcst{$hkey}[$server_index] = $line2[8];
+	}
+	elsif ($line2[1] eq "eth4") {
+	  $eth4_rxpck{$hkey}[$server_index] = $line2[2];
+	  $eth4_txpck{$hkey}[$server_index] = $line2[3];
+	  $eth4_rxbyt{$hkey}[$server_index] = $line2[4];
+	  $eth4_txbyt{$hkey}[$server_index] = $line2[5];
+	  $eth4_rxcmp{$hkey}[$server_index] = $line2[6];
+	  $eth4_txcmp{$hkey}[$server_index] = $line2[7];
+	  $eth4_rxmcst{$hkey}[$server_index] = $line2[8];
+	}
+	elsif ($line2[1] eq "eth5") {
+	  $eth5_rxpck{$hkey}[$server_index] = $line2[2];
+	  $eth5_txpck{$hkey}[$server_index] = $line2[3];
+	  $eth5_rxbyt{$hkey}[$server_index] = $line2[4];
+	  $eth5_txbyt{$hkey}[$server_index] = $line2[5];
+	  $eth5_rxcmp{$hkey}[$server_index] = $line2[6];
+	  $eth5_txcmp{$hkey}[$server_index] = $line2[7];
+	  $eth5_rxmcst{$hkey}[$server_index] = $line2[8];
+	}
+      }
+      # Socket
+      elsif ($mode == 8) {
+	if ($line =~ "totsck") {
+	  next(LINE);
+	}
+	$totsck{$hkey}[$server_index] = $line2[1];
+	$tcpsck{$hkey}[$server_index] = $line2[2];
+	$udpsck{$hkey}[$server_index] = $line2[3];
+	$rawsck{$hkey}[$server_index] = $line2[4];
+	$ipfrag{$hkey}[$server_index] = $line2[5];
+      }
+    }
+
+  NEXT_SERVER:
+    close(SERVER_FILE);
+    system("gzip $dir_name/$server_name");
+  }
+  $dir_index++;
+}
+close(DIR_LIST);
+
+
+print("Outputting into result files\n");
+#### Write a header line ####
+for ($i = 0; $i < 2; $i++) {
+  if ($i == 0) {
+    open(OUTPUT_FILE, "> sar_BO.csv");
+    open(OUTPUT_FILE2, "> sar_BO_small.csv");
+  }
+  else {
+    open(OUTPUT_FILE, "> sar_BO.csv");
+    open(OUTPUT_FILE2, "> sar_BO_small.csv");
+  }
+  print(OUTPUT_FILE "workload");
+  print(OUTPUT_FILE2 "workload");
+    for ($j = 0; $j <= $#servers; $j++) {
+    $pref = $prefixs[$j];
+    printf(OUTPUT_FILE ",%s_proc", $pref);
+    printf(OUTPUT_FILE ",%s_cswch", $pref);
+    printf(OUTPUT_FILE ",%s_cpu_user", $pref);
+    printf(OUTPUT_FILE ",%s_cpu_nice", $pref);
+    printf(OUTPUT_FILE ",%s_cpu_system", $pref);
+    printf(OUTPUT_FILE ",%s_cpu_iowait", $pref);
+    printf(OUTPUT_FILE ",%s_cpu_steal", $pref);
+    printf(OUTPUT_FILE ",%s_cpu_used", $pref);
+    printf(OUTPUT_FILE ",%s_cpu_idle", $pref);
+    printf(OUTPUT_FILE ",%s_disk_tps", $pref);
+    printf(OUTPUT_FILE ",%s_disk_rtps", $pref);
+    printf(OUTPUT_FILE ",%s_disk_wtps", $pref);
+    printf(OUTPUT_FILE ",%s_disk_bread", $pref);
+    printf(OUTPUT_FILE ",%s_disk_bwrtn", $pref);
+    printf(OUTPUT_FILE ",%s_eth0_rxpck", $pref);
+    printf(OUTPUT_FILE ",%s_eth0_txpck", $pref);
+    printf(OUTPUT_FILE ",%s_eth0_rxbyt", $pref);
+    printf(OUTPUT_FILE ",%s_eth0_txbyt", $pref);
+    printf(OUTPUT_FILE ",%s_eth0_rxcmp", $pref);
+    printf(OUTPUT_FILE ",%s_eth0_txcmp", $pref);
+    printf(OUTPUT_FILE ",%s_eth0_rxmcst", $pref);
+    printf(OUTPUT_FILE ",%s_eth1_rxpck", $pref);
+    printf(OUTPUT_FILE ",%s_eth1_txpck", $pref);
+    printf(OUTPUT_FILE ",%s_eth1_rxbyt", $pref);
+    printf(OUTPUT_FILE ",%s_eth1_txbyt", $pref);
+    printf(OUTPUT_FILE ",%s_eth1_rxcmp", $pref);
+    printf(OUTPUT_FILE ",%s_eth1_txcmp", $pref);
+    printf(OUTPUT_FILE ",%s_eth1_rxmcst", $pref);
+    printf(OUTPUT_FILE ",%s_eth2_rxpck", $pref);
+    printf(OUTPUT_FILE ",%s_eth2_txpck", $pref);
+    printf(OUTPUT_FILE ",%s_eth2_rxbyt", $pref);
+    printf(OUTPUT_FILE ",%s_eth2_txbyt", $pref);
+    printf(OUTPUT_FILE ",%s_eth2_rxcmp", $pref);
+    printf(OUTPUT_FILE ",%s_eth2_txcmp", $pref);
+    printf(OUTPUT_FILE ",%s_eth2_rxmcst", $pref);
+    printf(OUTPUT_FILE ",%s_eth3_rxpck", $pref);
+    printf(OUTPUT_FILE ",%s_eth3_txpck", $pref);
+    printf(OUTPUT_FILE ",%s_eth3_rxbyt", $pref);
+    printf(OUTPUT_FILE ",%s_eth3_txbyt", $pref);
+    printf(OUTPUT_FILE ",%s_eth3_rxcmp", $pref);
+    printf(OUTPUT_FILE ",%s_eth3_txcmp", $pref);
+    printf(OUTPUT_FILE ",%s_eth3_rxmcst", $pref);
+    printf(OUTPUT_FILE ",%s_eth4_rxpck", $pref);
+    printf(OUTPUT_FILE ",%s_eth4_txpck", $pref);
+    printf(OUTPUT_FILE ",%s_eth4_rxbyt", $pref);
+    printf(OUTPUT_FILE ",%s_eth4_txbyt", $pref);
+    printf(OUTPUT_FILE ",%s_eth4_rxcmp", $pref);
+    printf(OUTPUT_FILE ",%s_eth4_txcmp", $pref);
+    printf(OUTPUT_FILE ",%s_eth4_rxmcst", $pref);
+    printf(OUTPUT_FILE ",%s_eth5_rxpck", $pref);
+    printf(OUTPUT_FILE ",%s_eth5_txpck", $pref);
+    printf(OUTPUT_FILE ",%s_eth5_rxbyt", $pref);
+    printf(OUTPUT_FILE ",%s_eth5_txbyt", $pref);
+    printf(OUTPUT_FILE ",%s_eth5_rxcmp", $pref);
+    printf(OUTPUT_FILE ",%s_eth5_txcmp", $pref);
+    printf(OUTPUT_FILE ",%s_eth5_rxmcst", $pref);
+    printf(OUTPUT_FILE ",%s_kbmemfree", $pref);
+    printf(OUTPUT_FILE ",%s_kbmemused", $pref);
+    printf(OUTPUT_FILE ",%s_memused", $pref);
+    printf(OUTPUT_FILE ",%s_kbbuffers", $pref);
+    printf(OUTPUT_FILE ",%s_kbcached", $pref);
+    printf(OUTPUT_FILE ",%s_kbswpfree", $pref);
+    printf(OUTPUT_FILE ",%s_kbswpused", $pref);
+    printf(OUTPUT_FILE ",%s_swpused", $pref);
+    printf(OUTPUT_FILE ",%s_kbswpcad", $pref);
+    printf(OUTPUT_FILE ",%s_totsck", $pref);
+    printf(OUTPUT_FILE ",%s_tcpsck", $pref);
+    printf(OUTPUT_FILE ",%s_udpsck", $pref);
+    printf(OUTPUT_FILE ",%s_rawsck", $pref);
+    printf(OUTPUT_FILE ",%s_ipfrag", $pref);
+    printf(OUTPUT_FILE2 ",%s\\_cpu\\_used", $pref);
+  }
+  print(OUTPUT_FILE "\n");
+  print(OUTPUT_FILE2 "\n");
+  close(OUTPUT_FILE);
+  close(OUTPUT_FILE2);
+}
+
+#### Write to output files ####
+$prev_of1 = "";
+foreach $key (sort (keys %cpu_used)) {
+  ($dir_index,$time) = split("-", $key);
+  if ($dir_index % 2 == 0) {
+    $of1 = "sar_BO.csv";
+    $of2 = "sar_BO_small.csv";
+  }
+  else {
+    $of1 = "sar_BO.csv";
+    $of2 = "sar_BO_small.csv";
+  }
+  if ($prev_of1 eq "") {
+    open(OUTPUT_FILE, ">> $of1");
+    open(OUTPUT_FILE2, ">> $of2");
+  }
+  elsif ($of1 ne $prev_of1) {
+    close(OUTPUT_FILE);
+    close(OUTPUT_FILE2);
+    open(OUTPUT_FILE, ">> $of1");
+    open(OUTPUT_FILE2, ">> $of2");
+  }
+  $prev_of1 = $of1;
+
+  print(OUTPUT_FILE "$workload[$dir_index]");
+  print(OUTPUT_FILE2 "$workload[$dir_index]");
+  for ($j = 0; $j <= $#servers; $j++) {
+    print(OUTPUT_FILE ",$proc{$key}[$j]");
+    print(OUTPUT_FILE ",$cswch{$key}[$j]");
+    print(OUTPUT_FILE ",$cpu_user{$key}[$j]");
+    print(OUTPUT_FILE ",$cpu_nice{$key}[$j]");
+    print(OUTPUT_FILE ",$cpu_system{$key}[$j]");
+    print(OUTPUT_FILE ",$cpu_iowait{$key}[$j]");
+    print(OUTPUT_FILE ",$cpu_steal{$key}[$j]");
+    print(OUTPUT_FILE ",$cpu_used{$key}[$j]");
+    print(OUTPUT_FILE ",$cpu_idle{$key}[$j]");
+    print(OUTPUT_FILE ",$disk_tps{$key}[$j]");
+    print(OUTPUT_FILE ",$disk_rtps{$key}[$j]");
+    print(OUTPUT_FILE ",$disk_wtps{$key}[$j]");
+    print(OUTPUT_FILE ",$disk_bread{$key}[$j]");
+    print(OUTPUT_FILE ",$disk_bwrtn{$key}[$j]");
+    print(OUTPUT_FILE ",$eth0_rxpck{$key}[$j]");
+    print(OUTPUT_FILE ",$eth0_txpck{$key}[$j]");
+    print(OUTPUT_FILE ",$eth0_rxbyt{$key}[$j]");
+    print(OUTPUT_FILE ",$eth0_txbyt{$key}[$j]");
+    print(OUTPUT_FILE ",$eth0_rxcmp{$key}[$j]");
+    print(OUTPUT_FILE ",$eth0_txcmp{$key}[$j]");
+    print(OUTPUT_FILE ",$eth0_rxmcst{$key}[$j]");
+    print(OUTPUT_FILE ",$eth1_rxpck{$key}[$j]");
+    print(OUTPUT_FILE ",$eth1_txpck{$key}[$j]");
+    print(OUTPUT_FILE ",$eth1_rxbyt{$key}[$j]");
+    print(OUTPUT_FILE ",$eth1_txbyt{$key}[$j]");
+    print(OUTPUT_FILE ",$eth1_rxcmp{$key}[$j]");
+    print(OUTPUT_FILE ",$eth1_txcmp{$key}[$j]");
+    print(OUTPUT_FILE ",$eth1_rxmcst{$key}[$j]");
+    print(OUTPUT_FILE ",$eth2_rxpck{$key}[$j]");
+    print(OUTPUT_FILE ",$eth2_txpck{$key}[$j]");
+    print(OUTPUT_FILE ",$eth2_rxbyt{$key}[$j]");
+    print(OUTPUT_FILE ",$eth2_txbyt{$key}[$j]");
+    print(OUTPUT_FILE ",$eth2_rxcmp{$key}[$j]");
+    print(OUTPUT_FILE ",$eth2_txcmp{$key}[$j]");
+    print(OUTPUT_FILE ",$eth2_rxmcst{$key}[$j]");
+    print(OUTPUT_FILE ",$eth3_rxpck{$key}[$j]");
+    print(OUTPUT_FILE ",$eth3_txpck{$key}[$j]");
+    print(OUTPUT_FILE ",$eth3_rxbyt{$key}[$j]");
+    print(OUTPUT_FILE ",$eth3_txbyt{$key}[$j]");
+    print(OUTPUT_FILE ",$eth3_rxcmp{$key}[$j]");
+    print(OUTPUT_FILE ",$eth3_txcmp{$key}[$j]");
+    print(OUTPUT_FILE ",$eth3_rxmcst{$key}[$j]");
+    print(OUTPUT_FILE ",$eth4_rxpck{$key}[$j]");
+    print(OUTPUT_FILE ",$eth4_txpck{$key}[$j]");
+    print(OUTPUT_FILE ",$eth4_rxbyt{$key}[$j]");
+    print(OUTPUT_FILE ",$eth4_txbyt{$key}[$j]");
+    print(OUTPUT_FILE ",$eth4_rxcmp{$key}[$j]");
+    print(OUTPUT_FILE ",$eth4_txcmp{$key}[$j]");
+    print(OUTPUT_FILE ",$eth4_rxmcst{$key}[$j]");
+    print(OUTPUT_FILE ",$eth5_rxpck{$key}[$j]");
+    print(OUTPUT_FILE ",$eth5_txpck{$key}[$j]");
+    print(OUTPUT_FILE ",$eth5_rxbyt{$key}[$j]");
+    print(OUTPUT_FILE ",$eth5_txbyt{$key}[$j]");
+    print(OUTPUT_FILE ",$eth5_rxcmp{$key}[$j]");
+    print(OUTPUT_FILE ",$eth5_txcmp{$key}[$j]");
+    print(OUTPUT_FILE ",$eth5_rxmcst{$key}[$j]");
+    print(OUTPUT_FILE ",$kbmemfree{$key}[$j]");
+    print(OUTPUT_FILE ",$kbmemused{$key}[$j]");
+    print(OUTPUT_FILE ",$memused{$key}[$j]");
+    print(OUTPUT_FILE ",$kbbuffers{$key}[$j]");
+    print(OUTPUT_FILE ",$kbcached{$key}[$j]");
+    print(OUTPUT_FILE ",$kbswpfree{$key}[$j]");
+    print(OUTPUT_FILE ",$kbswpused{$key}[$j]");
+    print(OUTPUT_FILE ",$swpused{$key}[$j]");
+    print(OUTPUT_FILE ",$kbswpcad{$key}[$j]");
+    print(OUTPUT_FILE ",$totsck{$key}[$j]");
+    print(OUTPUT_FILE ",$tcpsck{$key}[$j]");
+    print(OUTPUT_FILE ",$udpsck{$key}[$j]");
+    print(OUTPUT_FILE ",$rawsck{$key}[$j]");
+    print(OUTPUT_FILE ",$ipfrag{$key}[$j]");
+    print(OUTPUT_FILE2 ",$cpu_used{$key}[$j]");
+  }
+  print(OUTPUT_FILE "\n");
+  print(OUTPUT_FILE2 "\n");
+}
+if ($prev_of1 ne "") {
+  close(OUTPUT_FILE);
+  close(OUTPUT_FILE2);
+}
+
+system("rm tmp-dirlist");
